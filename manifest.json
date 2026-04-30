@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Dj sound edit boost",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Dj boost music",
+  "start_url": "/",
+  "theme_color": "#751b3c",
+  "id": "Dj",
+  "description": "Musik dj edit"
+}
