@@ -3,23 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ SIMPLE - ANTI GAGAL</title>
+  <title>DJ PRO - SIMPLE + LENGKAP</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:system-ui;padding:15px}.header{text-align:center;padding:15px;background:#1e293b;border-radius:10px;margin-bottom:15px}.status{background:#ef4444;padding:12px;text-align:center;border-radius:8px;font-weight:700;margin-bottom:15px}.status.ready{background:#22c55e}.deck{background:#1a1a1a;padding:20px;border-radius:12px;margin-bottom:15px;border:2px solid #2a2a2a}.deck h2{color:#3b82f6;text-align:center;margin-bottom:15px}audio{width:100%;margin:10px 0;border-radius:8px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.btn{background:#2a2a2a;border:none;color:white;padding:12px;border-radius:8px;font-weight:600;font-size:14px}.btn:active{transform:scale(0.95)}.btn-jedag{background:#ef4444}.slider-box{margin:15px 0}.slider-box label{display:flex;justify-content:space-between;font-size:12px;color:#9ca3af;margin-bottom:5px}.slider-box input{width:100%;height:8px}.track-info{text-align:center;font-size:12px;color:#22c55e;margin:8px 0}.fx-box{background:#0a0a0a;padding:15px;border-radius:8px;margin-top:15px}
+    *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:system-ui;padding:12px}.header{text-align:center;padding:12px;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:10px;margin-bottom:12px;border:1px solid #3b82f6}.header h1{font-size:18px;text-shadow:0 0 10px #3b82f6}.status{background:#ef4444;padding:10px;text-align:center;border-radius:8px;font-weight:700;margin-bottom:12px;font-size:14px}.status.ready{background:#22c55e}.deck{background:#1a1a1a;padding:15px;border-radius:12px;margin-bottom:12px;border:2px solid #2a2a2a}.deck h2{color:#3b82f6;text-align:center;margin-bottom:10px;font-size:16px}.track-info{font-size:11px;color:#22c55e;text-align:center;margin:6px 0;min-height:15px}audio{width:100%;margin:8px 0;height:40px;border-radius:8px}.waveform{width:100%;height:60px;background:#0a0a0a;border-radius:6px;margin:8px 0;position:relative;overflow:hidden;cursor:pointer}#waveCanvas{width:100%;height:100%}.time-display{text-align:center;font-family:monospace;font-size:12px;color:#9ca3af;margin:4px 0}.jogwheel{width:140px;height:140px;margin:12px auto;border-radius:50%;background:radial-gradient(circle,#2a2a2a 0%,#0a0a0a 70%);border:3px solid #3b82f6;box-shadow:0 0 20px rgba(59,130,246,0.4);cursor:grab;position:relative;touch-action:none}.jogwheel::after{content:'';position:absolute;top:50%;left:50%;width:3px;height:40%;background:#3b82f6;transform:translate(-50%,-100%);border-radius:2px}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0}.btn{background:#2a2a2a;border:1px solid #3a3a3a;color:white;padding:10px;border-radius:6px;cursor:pointer;font-weight:600;font-size:11px;user-select:none}.btn:active{transform:scale(0.95)}.btn-play{background:#22c55e;border-color:#22c55e}.btn-play.pause{background:#f59e0b}.btn-cue{background:#3b82f6}.btn-loop{background:#2a2a2a}.btn-loop.active{background:#f59e0b}.btn-jedag{background:#ef4444}.slider-box{margin:10px 0}.slider-box label{display:flex;justify-content:space-between;font-size:10px;color:#9ca3af;margin-bottom:3px}.slider-box input{width:100%;height:5px}.fx-panel{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:12px;margin:12px 0}.fx-panel h3{margin-bottom:10px;color:#3b82f6;text-align:center;font-size:14px}.fx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fx-box{background:#0a0a0a;padding:10px;border-radius:6px}.fx-box h4{font-size:10px;margin-bottom:8px;color:#9ca3af;text-align:center}.eq-container{display:flex;gap:8px;justify-content:center}.eq-band{display:flex;flex-direction:column;align-items:center}.eq-band input{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:6px;height:80px}.eq-band label{font-size:8px;color:#9ca3af;margin-top:4px}input[type="file"]{width:100%;font-size:10px;margin-bottom:6px;color:#9ca3af}.rec-btn{width:100%;background:#ef4444;border:none;color:white;padding:12px;border-radius:8px;font-weight:700;margin-top:10px;font-size:14px}.rec-btn.recording{background:#22c55e;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
   </style>
 </head>
 <body>
-  <div class="header"><h1>🎧 DJ SIMPLE - PASTI BUNYI</h1></div>
-  <div class="status" id="status">1. Pilih file MP3 di bawah 2. Klik Play</div>
+  <div class="header"><h1>🎧 DJ PRO - BUNYI + LENGKAP</h1></div>
+  <div class="status" id="status">Pilih file MP3 dulu</div>
 
   <div class="deck">
     <h2>DECK A</h2>
     <input type="file" id="fileA" accept="audio/*">
     <div class="track-info" id="infoA">No Track</div>
     <audio id="audioA" controls></audio>
+    <div class="waveform" id="waveform"><canvas id="waveCanvas"></canvas></div>
+    <div class="time-display"><span id="curTime">00:00</span> / <span id="durTime">00:00</span></div>
+    <div class="jogwheel" id="jogA"></div>
+    
+    <div class="controls">
+      <button class="btn btn-play" id="playA">▶ PLAY</button>
+      <button class="btn btn-cue" id="cueA">CUE</button>
+      <button class="btn btn-loop" id="loopA">LOOP 4B</button>
+    </div>
     
     <div class="slider-box">
-      <label>SPEED/TEMPO: <span id="speedAVal">1.00x</span></label>
+      <label>TEMPO/PITCH: <span id="speedAVal">1.00x</span></label>
       <input type="range" id="speedA" min="0.5" max="1.5" step="0.01" value="1">
     </div>
     
@@ -27,64 +36,182 @@
       <button class="btn btn-jedag" id="jedagA">🔥 JEDAG</button>
       <button class="btn" id="sadA">😢 SAD</button>
       <button class="btn" id="lofiA">☕ LOFI</button>
-      <button class="btn" id="resetA">RESET</button>
     </div>
+  </div>
 
-    <div class="fx-box">
-      <div class="slider-box">
-        <label>BASS BOOST: <span id="bassAVal">0</span></label>
-        <input type="range" id="bassA" min="0" max="20" value="0">
+  <div class="fx-panel">
+    <h3>🔊 MASTER FX</h3>
+    <div class="fx-grid">
+      <div class="fx-box">
+        <h4>EQ 3-BAND</h4>
+        <div class="eq-container">
+          <div class="eq-band"><input type="range" id="bass" min="-20" max="20" value="0" orient="vertical"><label>BASS</label></div>
+          <div class="eq-band"><input type="range" id="mid" min="-20" max="20" value="0" orient="vertical"><label>MID</label></div>
+          <div class="eq-band"><input type="range" id="treble" min="-20" max="20" value="0" orient="vertical"><label>TREBLE</label></div>
+        </div>
       </div>
-      <div class="slider-box">
-        <label>REVERB: <span id="reverbAVal">0%</span></label>
-        <input type="range" id="reverbA" min="0" max="100" value="0">
+      <div class="fx-box">
+        <h4>REVERB</h4>
+        <div class="slider-box"><label>Mix: <span id="reverbVal">0%</span></label><input type="range" id="reverb" min="0" max="100" value="0"></div>
+        <div class="slider-box"><label>Size: <span id="sizeVal">2s</span></label><input type="range" id="size" min="0.1" max="10" step="0.1" value="2"></div>
+      </div>
+      <div class="fx-box">
+        <h4>ECHO</h4>
+        <div class="slider-box"><label>Mix: <span id="echoVal">0%</span></label><input type="range" id="echo" min="0" max="100" value="0"></div>
+        <div class="slider-box"><label>Time: <span id="echoTimeVal">0.3s</span></label><input type="range" id="echoTime" min="0.05" max="1" step="0.05" value="0.3"></div>
+      </div>
+      <div class="fx-box">
+        <h4>FILTER</h4>
+        <div class="slider-box"><label>Cutoff: <span id="filterVal">20kHz</span></label><input type="range" id="filter" min="20" max="20000" value="20000"></div>
+        <div class="slider-box"><label>Res: <span id="resVal">0</span></label><input type="range" id="resonance" min="0" max="20" value="0"></div>
       </div>
     </div>
   </div>
 
-  <button class="btn btn-jedag" id="recBtn" style="width:100%;padding:15px;font-size:16px;">● REC MIX</button>
+  <button class="rec-btn" id="recBtn">● REC MIX</button>
 
 <script>
 let audioA = document.getElementById('audioA');
-let audioCtx, bassFilter, reverbNode, sourceA, gainNode, recorder, chunks = [];
+let audioCtx, source, bassEQ, midEQ, trebleEQ, filter, reverb, echo, gainNode, analyser;
+let cuePoint = 0, isLooping = false, loopStart = 0, loopEnd = 0;
+let recorder, chunks = [], animationId;
 
-// FILE LOAD - PALING SIMPLE
+// FILE LOAD
 document.getElementById('fileA').onchange = async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   
-  document.getElementById('status').textContent = '⏳ Loading: ' + file.name;
-  document.getElementById('infoA').textContent = file.name;
-  
-  // Pake URL biasa aja, 100% work
+  document.getElementById('status').textContent = '⏳ Loading...';
   const url = URL.createObjectURL(file);
   audioA.src = url;
+  document.getElementById('infoA').textContent = file.name;
   
-  audioA.onloadeddata = () => {
-    document.getElementById('status').textContent = '✅ READY! Klik Play di audio player';
+  audioA.onloadedmetadata = () => {
+    document.getElementById('durTime').textContent = fmtTime(audioA.duration);
+    document.getElementById('status').textContent = '✅ READY! Klik PLAY';
     document.getElementById('status').className = 'status ready';
-    document.getElementById('infoA').textContent = file.name + ' - ' + fmtTime(audioA.duration);
-    setupAudioFX();
+    setupAudio();
+    drawWaveform();
   };
   
-  audioA.onerror = (e) => {
-    document.getElementById('status').textContent = '❌ Error: File MP3 rusak / bukan MP3';
-    alert('File error! Coba download MP3 lain dari Y2mate\nPastikan.mp3 bukan.m4a');
+  audioA.onerror = () => {
+    document.getElementById('status').textContent = '❌ File error! Coba MP3 lain';
+    alert('File rusak/bukan MP3. Download dari Y2mate format MP3 ya');
   };
 };
 
-// WEB AUDIO API BUAT FX
-function setupAudioFX() {
-  if (audioCtx) return; // Udah ada
+// AUDIO CONTEXT + FX CHAIN
+function setupAudio() {
+  if (audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  sourceA = audioCtx.createMediaElementSource(audioA);
-  bassFilter = audioCtx.createBiquadFilter();
-  bassFilter.type = 'lowshelf';
-  bassFilter.frequency.value = 200;
+  source = audioCtx.createMediaElementSource(audioA);
+  
+  // EQ 3-Band
+  bassEQ = audioCtx.createBiquadFilter();
+  bassEQ.type = 'lowshelf';
+  bassEQ.frequency.value = 200;
+  midEQ = audioCtx.createBiquadFilter();
+  midEQ.type = 'peaking';
+  midEQ.frequency.value = 1000;
+  midEQ.Q.value = 1;
+  trebleEQ = audioCtx.createBiquadFilter();
+  trebleEQ.type = 'highshelf';
+  trebleEQ.frequency.value = 3000;
+  
+  // Filter
+  filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 20000;
+  
+  // Echo
+  echo = audioCtx.createDelay(1.0);
+  echo.delayTime.value = 0.3;
+  const echoGain = audioCtx.createGain();
+  echoGain.gain.value = 0;
+  echo.connect(echoGain).connect(echo);
+  
+  // Reverb
+  reverb = audioCtx.createConvolver();
+  const reverbGain = audioCtx.createGain();
+  reverbGain.gain.value = 0;
+  createReverb(2);
+  
+  // Analyser buat waveform
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  
   gainNode = audioCtx.createGain();
   
-  sourceA.connect(bassFilter).connect(gainNode).connect(audioCtx.destination);
+  // Chain: source → bass → mid → treble → filter → echo → reverb → gain → destination
+  source.connect(bassEQ).connect(midEQ).connect(trebleEQ).connect(filter);
+  filter.connect(echo);
+  filter.connect(reverbGain);
+  reverbGain.connect(reverb);
+  filter.connect(gainNode);
+  echoGain.connect(gainNode);
+  reverb.connect(gainNode);
+  gainNode.connect(analyser).connect(audioCtx.destination);
 }
+
+// REVERB IMPULSE
+function createReverb(seconds) {
+  const rate = audioCtx.sampleRate;
+  const length = rate * seconds;
+  const impulse = audioCtx.createBuffer(2, length, rate);
+  for (let i = 0; i < 2; i++) {
+    const channel = impulse.getChannelData(i);
+    for (let j = 0; j < length; j++) {
+      channel[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / length, 2);
+    }
+  }
+  reverb.buffer = impulse;
+}
+
+// PLAY/PAUSE
+document.getElementById('playA').onclick = () => {
+  if (audioA.paused) {
+    audioA.play();
+    document.getElementById('playA').textContent = '⏸ PAUSE';
+    document.getElementById('playA').classList.add('pause');
+  } else {
+    audioA.pause();
+    document.getElementById('playA').textContent = '▶ PLAY';
+    document.getElementById('playA').classList.remove('pause');
+  }
+};
+
+// CUE - Tahan buat play dari cue point
+const cueBtn = document.getElementById('cueA');
+cueBtn.onmousedown = () => {
+  audioA.currentTime = cuePoint;
+  audioA.play();
+  cueBtn.style.background = '#22c55e';
+};
+cueBtn.onmouseup = () => {
+  audioA.pause();
+  cueBtn.style.background = '#3b82f6';
+};
+cueBtn.oncontextmenu = (e) => {
+  e.preventDefault();
+  cuePoint = audioA.currentTime;
+  cueBtn.textContent = 'CUE ✓';
+  setTimeout(() => cueBtn.textContent = 'CUE', 800);
+};
+
+// LOOP 4 BAR
+document.getElementById('loopA').onclick = () => {
+  isLooping =!isLooping;
+  const btn = document.getElementById('loopA');
+  if (isLooping) {
+    loopStart = audioA.currentTime;
+    loopEnd = loopStart + 8; // 8 detik = ~4 bar
+    btn.classList.add('active');
+    btn.textContent = 'LOOP ON';
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = 'LOOP 4B';
+  }
+};
 
 // TEMPO
 document.getElementById('speedA').oninput = (e) => {
@@ -92,55 +219,158 @@ document.getElementById('speedA').oninput = (e) => {
   document.getElementById('speedAVal').textContent = parseFloat(e.target.value).toFixed(2) + 'x';
 };
 
-// BASS BOOST
-document.getElementById('bassA').oninput = (e) => {
-  if (!bassFilter) setupAudioFX();
-  bassFilter.gain.value = parseFloat(e.target.value);
-  document.getElementById('bassAVal').textContent = e.target.value;
+// EQ
+document.getElementById('bass').oninput = (e) => {
+  if (bassEQ) bassEQ.gain.value = parseFloat(e.target.value);
+};
+document.getElementById('mid').oninput = (e) => {
+  if (midEQ) midEQ.gain.value = parseFloat(e.target.value);
+};
+document.getElementById('treble').oninput = (e) => {
+  if (trebleEQ) trebleEQ.gain.value = parseFloat(e.target.value);
 };
 
-// PRESET 1-KLIK
+// FILTER
+document.getElementById('filter').oninput = (e) => {
+  if (filter) filter.frequency.value = parseFloat(e.target.value);
+  const v = parseFloat(e.target.value);
+  document.getElementById('filterVal').textContent = v >= 1000? (v/1000).toFixed(1)+'kHz' : v+'Hz';
+};
+document.getElementById('resonance').oninput = (e) => {
+  if (filter) filter.Q.value = parseFloat(e.target.value);
+  document.getElementById('resVal').textContent = e.target.value;
+};
+
+// REVERB
+document.getElementById('reverb').oninput = (e) => {
+  if (reverb) reverbGain.gain.value = parseFloat(e.target.value) / 100;
+  document.getElementById('reverbVal').textContent = e.target.value + '%';
+};
+document.getElementById('size').oninput = (e) => {
+  createReverb(parseFloat(e.target.value));
+  document.getElementById('sizeVal').textContent = e.target.value + 's';
+};
+
+// ECHO
+document.getElementById('echo').oninput = (e) => {
+  if (echo) echoGain.gain.value = parseFloat(e.target.value) / 100;
+  document.getElementById('echoVal').textContent = e.target.value + '%';
+};
+document.getElementById('echoTime').oninput = (e) => {
+  if (echo) echo.delayTime.value = parseFloat(e.target.value);
+  document.getElementById('echoTimeVal').textContent = e.target.value + 's';
+};
+
+// PRESET
 document.getElementById('jedagA').onclick = () => {
-  audioA.playbackRate = 0.85;
   document.getElementById('speedA').value = 0.85;
-  document.getElementById('speedAVal').textContent = '0.85x';
-  if (!bassFilter) setupAudioFX();
-  bassFilter.gain.value = 18;
-  document.getElementById('bassA').value = 18;
-  document.getElementById('bassAVal').textContent = '18';
-  alert('🔥 JEDAG AKTIF! Play lagunya');
+  document.getElementById('speedA').dispatchEvent(new Event('input'));
+  document.getElementById('bass').value = 18;
+  document.getElementById('bass').dispatchEvent(new Event('input'));
+  document.getElementById('reverb').value = 15;
+  document.getElementById('reverb').dispatchEvent(new Event('input'));
 };
-
 document.getElementById('sadA').onclick = () => {
-  audioA.playbackRate = 0.80;
   document.getElementById('speedA').value = 0.80;
-  document.getElementById('speedAVal').textContent = '0.80x';
-  alert('😢 SAD MODE! Play lagunya');
+  document.getElementById('speedA').dispatchEvent(new Event('input'));
+  document.getElementById('reverb').value = 40;
+  document.getElementById('reverb').dispatchEvent(new Event('input'));
+  document.getElementById('treble').value = -5;
+  document.getElementById('treble').dispatchEvent(new Event('input'));
+  document.getElementById('filter').value = 8000;
+  document.getElementById('filter').dispatchEvent(new Event('input'));
 };
-
 document.getElementById('lofiA').onclick = () => {
-  audioA.playbackRate = 0.85;
   document.getElementById('speedA').value = 0.85;
-  document.getElementById('speedAVal').textContent = '0.85x';
-  if (!bassFilter) setupAudioFX();
-  bassFilter.gain.value = 8;
-  document.getElementById('bassA').value = 8;
-  alert('☕ LOFI MODE! Play lagunya');
+  document.getElementById('speedA').dispatchEvent(new Event('input'));
+  document.getElementById('filter').value = 4000;
+  document.getElementById('filter').dispatchEvent(new Event('input'));
+  document.getElementById('resonance').value = 8;
+  document.getElementById('resonance').dispatchEvent(new Event('input'));
+  document.getElementById('echo').value = 15;
+  document.getElementById('echo').dispatchEvent(new Event('input'));
+  document.getElementById('bass').value = 8;
+  document.getElementById('bass').dispatchEvent(new Event('input'));
+  document.getElementById('treble').value = -10;
+  document.getElementById('treble').dispatchEvent(new Event('input'));
 };
 
-document.getElementById('resetA').onclick = () => {
-  audioA.playbackRate = 1;
-  document.getElementById('speedA').value = 1;
-  document.getElementById('speedAVal').textContent = '1.00x';
-  if (bassFilter) bassFilter.gain.value = 0;
-  document.getElementById('bassA').value = 0;
-  document.getElementById('bassAVal').textContent = '0';
+// JOGWHEEL
+let isDragging = false, rotation = 0;
+const jog = document.getElementById('jogA');
+jog.onmousedown = jog.ontouchstart = () => { isDragging = true; };
+document.onmouseup = document.ontouchend = () => { isDragging = false; };
+document.onmousemove = document.ontouchmove = (e) => {
+  if (!isDragging) return;
+  const x = e.clientX || e.touches[0].clientX;
+  rotation += e.movementX || 2;
+  jog.style.transform = `rotate(${rotation}deg)`;
+  audioA.playbackRate = 1 + (e.movementX || 0) * 0.01;
+  clearTimeout(jog.timeout);
+  jog.timeout = setTimeout(() => {
+    audioA.playbackRate = parseFloat(document.getElementById('speedA').value);
+  }, 100);
+};
+
+// WAVEFORM
+function drawWaveform() {
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  
+  function draw() {
+    animationId = requestAnimationFrame(draw);
+    if (!analyser) return;
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteTimeDomainData(data);
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#3b82f6';
+    ctx.beginPath();
+    const sliceWidth = canvas.width / data.length;
+    let x = 0;
+    for (let i = 0; i < data.length; i++) {
+      const v = data[i] / 128.0;
+      const y = v * canvas.height / 2;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+      x += sliceWidth;
+    }
+    ctx.stroke();
+  }
+  draw();
+}
+
+// CLICK WAVEFORM TO SEEK
+document.getElementById('waveform').onclick = (e) => {
+  const rect = e.target.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const percent = x / rect.width;
+  audioA.currentTime = audioA.duration * percent;
+};
+
+// TIMER UPDATE
+setInterval(() => {
+  if (!audioA.paused) {
+    document.getElementById('curTime').textContent = fmtTime(audioA.currentTime);
+    // LOOP CHECK
+    if (isLooping && audioA.currentTime >= loopEnd) {
+      audioA.currentTime = loopStart;
+    }
+  }
+}, 100);
+
+audioA.onended = () => {
+  document.getElementById('playA').textContent = '▶ PLAY';
+  document.getElementById('playA').classList.remove('pause');
 };
 
 // REC
 document.getElementById('recBtn').onclick = async () => {
   if (!audioCtx) {
-    alert('Play lagu dulu baru bisa REC!');
+    alert('Play lagu dulu baru REC!');
     return;
   }
   if (!recorder) {
@@ -153,22 +383,22 @@ document.getElementById('recBtn').onclick = async () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'DJ_Mix.webm';
+      a.download = 'DJ_Mix_' + Date.now() + '.webm';
       a.click();
       chunks = [];
     };
     recorder.start();
     document.getElementById('recBtn').textContent = '■ STOP REC';
-    document.getElementById('recBtn').style.background = '#22c55e';
+    document.getElementById('recBtn').classList.add('recording');
   } else {
     recorder.stop();
     recorder = null;
     document.getElementById('recBtn').textContent = '● REC MIX';
-    document.getElementById('recBtn').style.background = '#ef4444';
+    document.getElementById('recBtn').classList.remove('recording');
   }
 };
 
-function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m}:${sec.toString().padStart(2,'0')}`}
+function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`}
 </script>
 </body>
 </html>
