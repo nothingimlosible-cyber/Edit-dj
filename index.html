@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ WEB PRO - FULL VERSION</title>
-  <meta name="theme-color" content="#0a0a0a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="manifest" href='data:application/manifest+json,{"name":"DJ WEB PRO","short_name":"DJ Pro","start_url":"./","display":"standalone","background_color":"%230a0a0a","theme_color":"%233b82f6","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E%3Crect width=%22512%22 height=%22512%22 fill=%22%233b82f6%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%22200%22 fill=%22white%22 font-family=%22Arial%22%3EDJ%3C/text%3E%3C/svg%3E","sizes":"512x512","type":"image/svg+xml"}]}'>
+  <title>DJ WEB PRO - FINAL FIX</title>
   <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:system-ui}.header{background:linear-gradient(135deg,#1e293b,#0f172a);padding:15px 20px;text-align:center;border-bottom:2px solid #3b82f6}.header h1{font-size:22px;text-shadow:0 0 20px #3b82f6}.status{background:#ef4444;padding:10px;text-align:center;font-size:14px;font-weight:600}.status.ready{background:#22c55e}.rec-btn{background:#ef4444;border:none;color:white;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:700;margin:10px 5px;font-size:14px}.rec-btn.recording{background:#22c55e;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}.dj-container{display:flex;gap:15px;padding:20px;max-width:1400px;margin:0 auto}.deck{flex:1;background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:20px}.deck h2{text-align:center;margin-bottom:15px;color:#3b82f6;font-size:18px}.waveform{width:100%;height:80px;background:#0a0a0a;border-radius:8px;margin:15px 0;cursor:pointer}.waveform canvas{width:100%;height:100%;border-radius:8px}.jogwheel{width:180px;height:180px;margin:20px auto;border-radius:50%;background:radial-gradient(circle,#2a2a2a 0%,#0a0a0a 70%);border:4px solid #3b82f6;box-shadow:0 0 30px rgba(59,130,246,0.5);cursor:grab;position:relative;transition:transform.05s}.jogwheel:active{cursor:grabbing}.jogwheel::after{content:'';position:absolute;top:50%;left:50%;width:4px;height:40%;background:#3b82f6;transform:translate(-50%,-100%);border-radius:2px}.bpm-display{text-align:center;font-family:monospace;font-size:28px;color:#22c55e;margin:10px 0}.time-display{text-align:center;font-family:monospace;font-size:14px;color:#9ca3af;margin:5px 0}.progress-bar{width:100%;height:4px;background:#2a2a2a;border-radius:2px;margin:8px 0;overflow:hidden}.progress-fill{height:100%;background:#3b82f6;width:0%;transition:width 0.1s linear}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:15px 0}.btn{background:#2a2a2a;border:1px solid #3a3a3a;color:white;padding:12px;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px;user-select:none}.btn:active{transform:scale(0.95)}.btn-play{background:#22c55e;border-color:#22c55e}.btn-play.stop{background:#ef4444;border-color:#ef4444}.slider-group{margin:12px 0}.slider-group label{display:block;font-size:11px;color:#9ca3af;margin-bottom:4px;display:flex;justify-content:space-between}.slider-group input[type="range"]{width:100%;height:6px;background:#2a2a2a;border-radius:3px;outline:none}.slider-group input[type="range"]::-webkit-slider-thumb{appearance:none;width:16px;height:16px;background:#3b82f6;border-radius:50%;cursor:pointer}.mixer{width:140px;background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:20px 10px;display:flex;flex-direction:column;align-items:center}.mixer h3{margin-bottom:20px;font-size:14px;color:#3b82f6}.crossfader{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:8px;height:250px;background:#2a2a2a;margin:20px 0}.fx-panel{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:20px;margin:20px}.fx-panel h3{margin-bottom:15px;color:#3b82f6;text-align:center}.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}.fx-box{background:#0a0a0a;padding:15px;border-radius:8px;border:1px solid #2a2a2a}.fx-box h4{font-size:12px;margin-bottom:12px;color:#9ca3af;text-align:center}.eq-container{display:flex;gap:15px;justify-content:center}.eq-band{display:flex;flex-direction:column;align-items:center}.eq-band input[type="range"]{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:8px;height:120px}.eq-band label{font-size:10px;color:#9ca3af;margin-top:8px}input[type="file"]{width:100%;font-size:11px;margin-bottom:10px;color:#9ca3af}.track-name{font-size:11px;color:#3b82f6;text-align:center;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}@media (max-width:900px){.dj-container{flex-direction:column}.mixer{width:100%;flex-direction:row;height:100px;justify-content:center}.crossfader{writing-mode:initial;width:200px;height:8px}}
+    *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#e5e5e5;font-family:system-ui;padding-bottom:20px}.header{background:linear-gradient(135deg,#1e293b,#0f172a);padding:15px;text-align:center;border-bottom:2px solid #3b82f6}.header h1{font-size:20px}.status{background:#ef4444;padding:12px;text-align:center;font-weight:700;font-size:15px}.status.ready{background:#22c55e}.rec-btn{background:#ef4444;border:none;color:white;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:700;margin:8px 4px;font-size:13px}.rec-btn.recording{background:#22c55e;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}.dj-container{display:flex;gap:12px;padding:15px;max-width:1400px;margin:0 auto}.deck{flex:1;background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:15px}.deck h2{text-align:center;margin-bottom:10px;color:#3b82f6;font-size:16px}.track-name{font-size:11px;color:#3b82f6;text-align:center;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.waveform{width:100%;height:70px;background:#0a0a0a;border-radius:8px;margin:10px 0;cursor:pointer}.waveform canvas{width:100%;height:100%;border-radius:8px}.time-display{text-align:center;font-family:monospace;font-size:13px;color:#9ca3af;margin:4px 0}.progress-bar{width:100%;height:4px;background:#2a2a2a;border-radius:2px;margin:6px 0;overflow:hidden;cursor:pointer}.progress-fill{height:100%;background:#3b82f6;width:0%;transition:width 0.1s linear}.jogwheel{width:160px;height:160px;margin:15px auto;border-radius:50%;background:radial-gradient(circle,#2a2a2a 0%,#0a0a0a 70%);border:4px solid #3b82f6;box-shadow:0 0 30px rgba(59,130,246,0.5);cursor:grab;position:relative}.jogwheel::after{content:'';position:absolute;top:50%;left:50%;width:4px;height:40%;background:#3b82f6;transform:translate(-50%,-100%);border-radius:2px}.bpm-display{text-align:center;font-family:monospace;font-size:24px;color:#22c55e;margin:8px 0}.controls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}.btn{background:#2a2a2a;border:1px solid #3a3a3a;color:white;padding:10px;border-radius:6px;cursor:pointer;font-weight:600;font-size:12px}.btn:active{transform:scale(0.95)}.btn-play{background:#22c55e;border-color:#22c55e}.btn-play.stop{background:#ef4444;border-color:#ef4444}.slider-group{margin:10px 0}.slider-group label{display:block;font-size:11px;color:#9ca3af;margin-bottom:3px;display:flex;justify-content:space-between}.slider-group input[type="range"]{width:100%;height:6px;background:#2a2a2a;border-radius:3px;outline:none}.mixer{width:120px;background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:15px 8px;display:flex;flex-direction:column;align-items:center}.mixer h3{margin-bottom:15px;font-size:13px;color:#3b82f6}.crossfader{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:8px;height:220px;background:#2a2a2a;margin:15px 0}.fx-panel{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:15px;margin:15px}.fx-panel h3{margin-bottom:12px;color:#3b82f6;text-align:center;font-size:15px}.fx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}.fx-box{background:#0a0a0a;padding:12px;border-radius:8px;border:1px solid #2a2a2a}.fx-box h4{font-size:11px;margin-bottom:10px;color:#9ca3af;text-align:center}.eq-container{display:flex;gap:12px;justify-content:center}.eq-band{display:flex;flex-direction:column;align-items:center}.eq-band input[type="range"]{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:8px;height:100px}.eq-band label{font-size:9px;color:#9ca3af;margin-top:6px}input[type="file"]{width:100%;font-size:10px;margin-bottom:8px;color:#9ca3af}@media (max-width:900px){.dj-container{flex-direction:column}.mixer{width:100%;flex-direction:row;height:90px}.crossfader{writing-mode:initial;width:180px;height:8px}}
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🎧 DJ WEB PRO - FULL VERSION</h1>
+    <h1>🎧 DJ WEB PRO - FINAL</h1>
     <button class="rec-btn" id="recBtn">● REC</button>
-    <button class="rec-btn" id="micBtn" style="background:#3b82f6;">🎤 MIC OFF</button>
+    <button class="rec-btn" id="micBtn" style="background:#3b82f6;">🎤 MIC</button>
   </div>
-  <div class="status" id="status">⚠️ KLIK PLAY DI SALAH SATU DECK BUAT AKTIFIN AUDIO</div>
+  <div class="status" id="status">⚠️ KLIK TOMBOL PLAY DULU BUAT AKTIFIN AUDIO</div>
 
   <div class="dj-container">
     <div class="deck">
@@ -27,7 +24,7 @@
       <input type="file" id="fileA" accept="audio/*">
       <div class="waveform" id="waveformA"><canvas id="waveA"></canvas></div>
       <div class="time-display"><span id="timeA">00:00</span> / <span id="durationA">00:00</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progressA"></div></div>
+      <div class="progress-bar" id="progA"><div class="progress-fill" id="progressA"></div></div>
       <div class="jogwheel" id="jogA"></div>
       <div class="bpm-display" id="bpmA">--- BPM</div>
       <div class="controls">
@@ -35,11 +32,10 @@
         <button class="btn" id="cueA">CUE</button>
         <button class="btn" id="syncA">SYNC</button>
         <button class="btn" id="loopA">LOOP</button>
-        <button class="btn" id="presetJedagA">🔥 JEDAG</button>
-        <button class="btn" id="presetSadA">😢 SAD</button>
       </div>
-      <div class="slider-group"><label>SLOW/TEMPO: <span id="tempoAVal">1.00x</span></label><input type="range" id="tempoA" min="0.5" max="1.5" step="0.01" value="1"></div>
+      <div class="slider-group"><label>TEMPO: <span id="tempoAVal">1.00x</span></label><input type="range" id="tempoA" min="0.5" max="1.5" step="0.01" value="1"></div>
       <div class="slider-group"><label>VOLUME: <span id="volAVal">0dB</span></label><input type="range" id="volA" min="-60" max="6" value="0"></div>
+      <div class="controls"><button class="btn" id="jedagA">🔥 JEDAG</button><button class="btn" id="sadA">😢 SAD</button></div>
     </div>
 
     <div class="mixer">
@@ -55,7 +51,7 @@
       <input type="file" id="fileB" accept="audio/*">
       <div class="waveform" id="waveformB"><canvas id="waveB"></canvas></div>
       <div class="time-display"><span id="timeB">00:00</span> / <span id="durationB">00:00</span></div>
-      <div class="progress-bar"><div class="progress-fill" id="progressB"></div></div>
+      <div class="progress-bar" id="progB"><div class="progress-fill" id="progressB"></div></div>
       <div class="jogwheel" id="jogB"></div>
       <div class="bpm-display" id="bpmB">--- BPM</div>
       <div class="controls">
@@ -63,77 +59,71 @@
         <button class="btn" id="cueB">CUE</button>
         <button class="btn" id="syncB">SYNC</button>
         <button class="btn" id="loopB">LOOP</button>
-        <button class="btn" id="presetJedagB">🔥 JEDAG</button>
-        <button class="btn" id="presetLofiB">☕ LOFI</button>
       </div>
-      <div class="slider-group"><label>SLOW/TEMPO: <span id="tempoBVal">1.00x</span></label><input type="range" id="tempoB" min="0.5" max="1.5" step="0.01" value="1"></div>
+      <div class="slider-group"><label>TEMPO: <span id="tempoBVal">1.00x</span></label><input type="range" id="tempoB" min="0.5" max="1.5" step="0.01" value="1"></div>
       <div class="slider-group"><label>VOLUME: <span id="volBVal">0dB</span></label><input type="range" id="volB" min="-60" max="6" value="0"></div>
+      <div class="controls"><button class="btn" id="jedagB">🔥 JEDAG</button><button class="btn" id="lofiB">☕ LOFI</button></div>
     </div>
   </div>
 
   <div class="fx-panel">
-    <h3>🔊 MASTER FX - BASS BOOST + REVERB + FILTER + ECHO</h3>
+    <h3>🔊 MASTER FX</h3>
     <div class="fx-grid">
       <div class="fx-box">
-        <h4>EQ 3-BAND / BASS BOOST</h4>
+        <h4>EQ / BASS BOOST</h4>
         <div class="eq-container">
           <div class="eq-band"><input type="range" id="bass" min="-20" max="20" value="0" orient="vertical"><label>BASS</label></div>
           <div class="eq-band"><input type="range" id="mid" min="-20" max="20" value="0" orient="vertical"><label>MID</label></div>
           <div class="eq-band"><input type="range" id="treble" min="-20" max="20" value="0" orient="vertical"><label>TREBLE</label></div>
         </div>
-      </div>
       <div class="fx-box">
         <h4>REVERB</h4>
         <div class="slider-group"><label>Mix: <span id="reverbVal">0%</span></label><input type="range" id="reverb" min="0" max="1" step="0.01" value="0"></div>
         <div class="slider-group"><label>Decay: <span id="decayVal">2.0s</span></label><input type="range" id="decay" min="0.1" max="10" step="0.1" value="2"></div>
       </div>
       <div class="fx-box">
-        <h4>ECHO / DELAY</h4>
+        <h4>ECHO</h4>
         <div class="slider-group"><label>Mix: <span id="echoVal">0%</span></label><input type="range" id="echo" min="0" max="1" step="0.01" value="0"></div>
         <div class="slider-group"><label>Time: <span id="echoTimeVal">0.25s</span></label><input type="range" id="echoTime" min="0.05" max="1" step="0.05" value="0.25"></div>
       </div>
       <div class="fx-box">
-        <h4>FILTER SWEEP</h4>
+        <h4>FILTER</h4>
         <div class="slider-group"><label>Cutoff: <span id="filterVal">20kHz</span></label><input type="range" id="filter" min="20" max="20000" value="20000"></div>
-        <div class="slider-group"><label>Resonance: <span id="resVal">0</span></label><input type="range" id="resonance" min="0" max="20" value="0"></div>
+        <div class="slider-group"><label>Res: <span id="resVal">0</span></label><input type="range" id="resonance" min="0" max="20" value="0"></div>
       </div>
     </div>
   </div>
 
 <script>
-let deckA,deckB,crossFade,masterEQ,masterReverb,masterDelay,masterFilter,audioReady=!1,bpmA=120,bpmB=120,loopA=!1,loopB=!1,recorder,recording=!1,chunks=[],mic,micOn=!1,cuePointA=0,cuePointB=0;
+let deckA,deckB,crossFade,masterEQ,masterReverb,masterDelay,masterFilter,audioReady=!1,bpmA=120,bpmB=120,recorder,recording=!1,chunks=[],mic,micOn=!1,cuePointA=0,cuePointB=0;
 
-async function startAudio(){if(audioReady)return!0;try{await Tone.start(),audioReady=!0,document.getElementById("status").textContent="✅ AUDIO READY! Upload lagu terus Play",document.getElementById("status").className="status ready",masterEQ=new Tone.EQ3(0,0,0).toDestination(),masterFilter=new Tone.Filter(2e4,"lowpass").connect(masterEQ),masterReverb=new Tone.Reverb({decay:2,wet:0}).connect(masterFilter),masterDelay=new Tone.FeedbackDelay({delayTime:"8n",feedback:.5,wet:0}).connect(masterReverb),crossFade=new Tone.CrossFade(.5).connect(masterDelay),deckA=new Tone.Player().connect(crossFade.a),deckB=new Tone.Player().connect(crossFade.b);return!0}catch(e){return alert("Error init audio: "+e),!1}}
+async function startAudio(){if(audioReady)return!0;try{await Tone.start(),audioReady=!0,document.getElementById("status").textContent="✅ AUDIO READY! Upload lagu → Play",document.getElementById("status").className="status ready",masterEQ=new Tone.EQ3(0,0,0).toDestination(),masterFilter=new Tone.Filter(2e4,"lowpass").connect(masterEQ),masterReverb=new Tone.Reverb({decay:2,wet:0}).connect(masterFilter),masterDelay=new Tone.FeedbackDelay({delayTime:.25,feedback:.5,wet:0}).connect(masterReverb),crossFade=new Tone.CrossFade(.5).connect(masterDelay),deckA=new Tone.Player({loop:!1}).connect(crossFade.a),deckB=new Tone.Player({loop:!1}).connect(crossFade.b);return!0}catch(e){return alert("Error: "+e),!1}}
 
-// FILE LOAD
-document.getElementById("fileA").onchange=async e=>{if(!await startAudio()||!e.target.files[0])return;const t=e.target.files[0];document.getElementById("trackA").textContent=t.name,await deckA.load(URL.createObjectURL(t)),drawWaveform("waveA",deckA.buffer),bpmA=await detectBPM(deckA.buffer),document.getElementById("bpmA").textContent=bpmA.toFixed(1)+" BPM",document.getElementById("durationA").textContent=formatTime(deckA.buffer.duration)};
-document.getElementById("fileB").onchange=async e=>{if(!await startAudio()||!e.target.files[0])return;const t=e.target.files[0];document.getElementById("trackB").textContent=t.name,await deckB.load(URL.createObjectURL(t)),drawWaveform("waveB",deckB.buffer),bpmB=await detectBPM(deckB.buffer),document.getElementById("bpmB").textContent=bpmB.toFixed(1)+" BPM",document.getElementById("durationB").textContent=formatTime(deckB.buffer.duration)};
+document.getElementById("fileA").onchange=async e=>{if(!e.target.files[0])return;await startAudio();const t=e.target.files[0];document.getElementById("trackA").textContent=t.name;try{await deckA.load(URL.createObjectURL(t)),drawWave("waveA",deckA.buffer),bpmA=await getBPM(deckA.buffer),document.getElementById("bpmA").textContent=bpmA.toFixed(1)+" BPM",document.getElementById("durationA").textContent=fmtTime(deckA.buffer.duration)}catch(e){alert("Gagal load: "+e)}};
+document.getElementById("fileB").onchange=async e=>{if(!e.target.files[0])return;await startAudio();const t=e.target.files[0];document.getElementById("trackB").textContent=t.name;try{await deckB.load(URL.createObjectURL(t)),drawWave("waveB",deckB.buffer),bpmB=await getBPM(deckB.buffer),document.getElementById("bpmB").textContent=bpmB.toFixed(1)+" BPM",document.getElementById("durationB").textContent=fmtTime(deckB.buffer.duration)}catch(e){alert("Gagal load: "+e)}};
 
-// PLAY/STOP
-document.getElementById("playA").onclick=async()=>{if(!await startAudio()||!deckA.loaded)return alert("Upload lagu dulu di Deck A");"started"===deckA.state?(deckA.stop(),document.getElementById("playA").textContent="▶ PLAY",document.getElementById("playA").classList.remove("stop")):(deckA.start(),document.getElementById("playA").textContent="■ STOP",document.getElementById("playA").classList.add("stop"))};
-document.getElementById("playB").onclick=async()=>{if(!await startAudio()||!deckB.loaded)return alert("Upload lagu dulu di Deck B");"started"===deckB.state?(deckB.stop(),document.getElementById("playB").textContent="▶ PLAY",document.getElementById("playB").classList.remove("stop")):(deckB.start(),document.getElementById("playB").textContent="■ STOP",document.getElementById("playB").classList.add("stop"))};
+document.getElementById("playA").onclick=async()=>{if(!await startAudio())return;if(!deckA.loaded)return alert("Upload lagu Deck A dulu!");"started"===deckA.state?(deckA.stop(),updPlayBtn("playA",!1)):(deckA.start(),updPlayBtn("playA",!0))};
+document.getElementById("playB").onclick=async()=>{if(!await startAudio())return;if(!deckB.loaded)return alert("Upload lagu Deck B dulu!");"started"===deckB.state?(deckB.stop(),updPlayBtn("playB",!1)):(deckB.start(),updPlayBtn("playB",!0))};
+function updPlayBtn(e,t){const o=document.getElementById(e);t?(o.textContent="■ STOP",o.classList.add("stop")):(o.textContent="▶ PLAY",o.classList.remove("stop"))}
 
-// CUE BENERAN
-function setupCue(btnId,deck,getCue,setCue){const btn=document.getElementById(btnId);btn.onmousedown=async()=>{if(!await startAudio()||!deck.loaded)return;deck.start(0,getCue()),btn.style.background="#22c55e"};btn.onmouseup=()=>{if(deck.state==="started")deck.stop();btn.style.background="#2a2a2a"};btn.oncontextmenu=e=>{e.preventDefault();setCue(deck.immediateState.currentTime||0);btn.textContent="CUE ✓";setTimeout(()=>btn.textContent="CUE",800)}}
-setupCue("cueA",deckA,()=>cuePointA,e=>cuePointA=e);
-setupCue("cueB",deckB,()=>cuePointB,e=>cuePointB=e);
+// CUE
+function setupCue(e,t,o,a){const n=document.getElementById(e);n.onmousedown=async()=>{await startAudio();if(t.loaded){t.start(0,o()),n.style.background="#22c55e"}},n.onmouseup=()=>{"started"===t.state&&t.stop(),n.style.background="#2a2a2a"},n.oncontextmenu=e=>{e.preventDefault(),a(t.immediateState.currentTime||0),n.textContent="CUE ✓",setTimeout(()=>n.textContent="CUE",600)}}
+setupCue("cueA",deckA,()=>cuePointA,e=>cuePointA=e);setupCue("cueB",deckB,()=>cuePointB,e=>cuePointB=e);
 
-// LOOP BENERAN
-document.getElementById("loopA").onclick=()=>{if(!deckA.loaded)return alert("Upload lagu dulu");loopA=!loopA;const e=document.getElementById("loopA");loopA?(deckA.setLoopPoints(deckA.immediateState.currentTime||0,(deckA.immediateState.currentTime||0)+8),deckA.loop=!0,e.style.background="#f59e0b",e.textContent="LOOP ON"):(deckA.loop=!1,e.style.background="#2a2a2a",e.textContent="LOOP")};
-document.getElementById("loopB").onclick=()=>{if(!deckB.loaded)return alert("Upload lagu dulu");loopB=!loopB;const e=document.getElementById("loopB");loopB?(deckB.setLoopPoints(deckB.immediateState.currentTime||0,(deckB.immediateState.currentTime||0)+8),deckB.loop=!0,e.style.background="#f59e0b",e.textContent="LOOP ON"):(deckB.loop=!1,e.style.background="#2a2a2a",e.textContent="LOOP")};
+// LOOP
+document.getElementById("loopA").onclick=()=>{if(!deckA.loaded)return;deckA.loop=!deckA.loop;const e=document.getElementById("loopA");deckA.loop?(deckA.setLoopPoints(deckA.immediateState.currentTime||0,(deckA.immediateState.currentTime||0)+8),e.style.background="#f59e0b",e.textContent="LOOP ON"):(e.style.background="#2a2a2a",e.textContent="LOOP")};
+document.getElementById("loopB").onclick=()=>{if(!deckB.loaded)return;deckB.loop=!deckB.loop;const e=document.getElementById("loopB");deckB.loop?(deckB.setLoopPoints(deckB.immediateState.currentTime||0,(deckB.immediateState.currentTime||0)+8),e.style.background="#f59e0b",e.textContent="LOOP ON"):(e.style.background="#2a2a2a",e.textContent="LOOP")};
 
 // SYNC
 document.getElementById("syncA").onclick=()=>{const e=bpmB/bpmA;deckA.playbackRate=e,document.getElementById("tempoA").value=e,document.getElementById("tempoAVal").textContent=e.toFixed(2)+"x"};
 document.getElementById("syncB").onclick=()=>{const e=bpmA/bpmB;deckB.playbackRate=e,document.getElementById("tempoB").value=e,document.getElementById("tempoBVal").textContent=e.toFixed(2)+"x"};
 
-// TEMPO + VOLUME
+// SLIDERS
 document.getElementById("tempoA").oninput=e=>{deckA.playbackRate=parseFloat(e.target.value),document.getElementById("tempoAVal").textContent=parseFloat(e.target.value).toFixed(2)+"x"};
 document.getElementById("tempoB").oninput=e=>{deckB.playbackRate=parseFloat(e.target.value),document.getElementById("tempoBVal").textContent=parseFloat(e.target.value).toFixed(2)+"x"};
 document.getElementById("volA").oninput=e=>{deckA.volume.value=parseFloat(e.target.value),document.getElementById("volAVal").textContent=e.target.value+"dB"};
 document.getElementById("volB").oninput=e=>{deckB.volume.value=parseFloat(e.target.value),document.getElementById("volBVal").textContent=e.target.value+"dB"};
 document.getElementById("crossfader").oninput=e=>crossFade.fade.value=parseFloat(e.target.value);
-
-// FX
 document.getElementById("bass").oninput=e=>masterEQ.low.value=parseFloat(e.target.value);
 document.getElementById("mid").oninput=e=>masterEQ.mid.value=parseFloat(e.target.value);
 document.getElementById("treble").oninput=e=>masterEQ.high.value=parseFloat(e.target.value);
@@ -144,22 +134,27 @@ document.getElementById("echoTime").oninput=e=>{masterDelay.delayTime.value=pars
 document.getElementById("filter").oninput=e=>{masterFilter.frequency.value=parseFloat(e.target.value);const t=parseFloat(e.target.value);document.getElementById("filterVal").textContent=t>=1e3?(t/1e3).toFixed(1)+"kHz":t+"Hz"};
 document.getElementById("resonance").oninput=e=>{masterFilter.Q.value=parseFloat(e.target.value),document.getElementById("resVal").textContent=e.target.value};
 
-// JOGWHEEL
-[["jogA","tempoA",()=>deckA],["jogB","tempoB",()=>deckB]].forEach(([e,t,o])=>{const a=document.getElementById(e);let n=!1,r=0;a.onmousedown=e=>{n=!0,e.preventDefault()},document.onmouseup=()=>{n=!1},document.onmousemove=e=>{if(n&&o().loaded){r+=e.movementX,a.style.transform=`rotate(${r}deg)`;const a=o(),n=parseFloat(document.getElementById(t).value);a.playbackRate=n+1e-2*e.movementX,clearTimeout(a.scratchTimeout),a.scratchTimeout=setTimeout(()=>a.playbackRate=n,100)}}});
-
-// WAVEFORM SEEK
-document.getElementById("waveformA").onclick=e=>{if(!deckA.loaded)return;const t=e.offsetX/e.target.offsetWidth;deckA.seek(deckA.buffer.duration*t)};
-document.getElementById("waveformB").onclick=e=>{if(!deckB.loaded)return;const t=e.offsetX/e.target.offsetWidth;deckB.seek(deckB.buffer.duration*t)};
-
 // PRESET
-function applyPreset(deck,vals){vals.tempo&&(document.getElementById("tempo"+deck).value=vals.tempo,document.getElementById("tempo"+deck).dispatchEvent(new Event("input")));vals.bass&&(document.getElementById("bass").value=vals.bass,document.getElementById("bass").dispatchEvent(new Event("input")));vals.reverb&&(document.getElementById("reverb").value=vals.reverb,document.getElementById("reverb").dispatchEvent(new Event("input")));vals.decay&&(document.getElementById("decay").value=vals.decay,document.getElementById("decay").dispatchEvent(new Event("input")));vals.treble&&(document.getElementById("treble").value=vals.treble,document.getElementById("treble").dispatchEvent(new Event("input")));vals.filter&&(document.getElementById("filter").value=vals.filter,document.getElementById("filter").dispatchEvent(new Event("input")));vals.res&&(document.getElementById("resonance").value=vals.res,document.getElementById("resonance").dispatchEvent(new Event("input")));vals.echo&&(document.getElementById("echo").value=vals.echo,document.getElementById("echo").dispatchEvent(new Event("input")))}
-document.getElementById("presetJedagA").onclick=()=>applyPreset("A",{tempo:0.85,bass:18,reverb:0.15});
-document.getElementById("presetJedagB").onclick=()=>applyPreset("B",{tempo:0.85,bass:18,reverb:0.15});
-document.getElementById("presetSadA").onclick=()=>applyPreset("A",{tempo:0.80,reverb:0.40,decay:5,treble:-5,filter:8000});
-document.getElementById("presetLofiB").onclick=()=>applyPreset("B",{tempo:0.85,filter:4000,res:8,echo:0.15,bass:8,treble:-10});
+function setPreset(e,t){t.tempo&&(document.getElementById("tempo"+e).value=t.tempo,document.getElementById("tempo"+e).dispatchEvent(new Event("input"))),t.bass&&(document.getElementById("bass").value=t.bass,document.getElementById("bass").dispatchEvent(new Event("input"))),t.reverb&&(document.getElementById("reverb").value=t.reverb,document.getElementById("reverb").dispatchEvent(new Event("input"))),t.decay&&(document.getElementById("decay").value=t.decay,document.getElementById("decay").dispatchEvent(new Event("input"))),t.treble&&(document.getElementById("treble").value=t.treble,document.getElementById("treble").dispatchEvent(new Event("input"))),t.filter&&(document.getElementById("filter").value=t.filter,document.getElementById("filter").dispatchEvent(new Event("input"))),t.res&&(document.getElementById("resonance").value=t.res,document.getElementById("resonance").dispatchEvent(new Event("input"))),t.echo&&(document.getElementById("echo").value=t.echo,document.getElementById("echo").dispatchEvent(new Event("input")))}
+document.getElementById("jedagA").onclick=()=>setPreset("A",{tempo:.85,bass:18,reverb:.15});
+document.getElementById("jedagB").onclick=()=>setPreset("B",{tempo:.85,bass:18,reverb:.15});
+document.getElementById("sadA").onclick=()=>setPreset("A",{tempo:.8,reverb:.4,decay:5,treble:-5,filter:8e3});
+document.getElementById("lofiB").onclick=()=>setPreset("B",{tempo:.85,filter:4e3,res:8,echo:.15,bass:8,treble:-10});
 
 // MIC
-document.getElementById("micBtn").onclick=async()=>{if(!audioReady)await startAudio();if(!micOn){try{mic=new Tone.UserMedia;await mic.open(),mic.connect(masterEQ),micOn=!0;const e=document.getElementById("micBtn");e.textContent="🎤 MIC ON",e.style.background="#22c55e"}catch(e){alert("Gagal nyalain mic: "+e)}}else{mic.close(),micOn=!1;const e=document.getElementById("micBtn");e.textContent="🎤 MIC OFF",e.style.background="#3b82f6"}};
+document.getElementById("micBtn").onclick=async()=>{await startAudio();if(!micOn){try{mic=new Tone.UserMedia,await mic.open(),mic.connect(masterEQ),micOn=!0;const e=document.getElementById("micBtn");e.textContent="🎤 MIC ON",e.style.background="#22c55e"}catch(e){alert("Gagal mic: "+e)}}else{mic.close(),micOn=!1;const e=document.getElementById("micBtn");e.textContent="🎤 MIC",e.style.background="#3b82f6"}};
 
 // REC
-document.getElementById("recBtn").onclick=async()=>{if(!audioReady)return alert("Klik Play dulu");if(!recording){const e=Tone.context.createMediaStreamDestination();masterEQ.connect(e),recorder=new MediaRecorder(e.stream),recorder.ondataavailable=e=>chunks.push(e.data),recorder.onstop=()=>{const e=new Blob(chunks,{type:"audio/webm"}),t=URL.createObjectURL(e),o=document.createElement("a");o.href=t,o.download="DJ_Mix_"+Date.now()+".webm",o.click(),chunks=[]},recorder.start(),recor
+document.getElementById("recBtn").onclick=async()=>{if(!await startAudio())return;if(!recording){const e=Tone.context.createMediaStreamDestination();masterEQ.connect(e),recorder=new MediaRecorder(e.stream),recorder.ondataavailable=e=>chunks.push(e.data),recorder.onstop=()=>{const e=new Blob(chunks,{type:"audio/webm"}),t=URL.createObjectURL(e),o=document.createElement("a");o.href=t,o.download="DJ_Mix.webm",o.click(),chunks=[]},recorder.start(),recording=!0;const e=document.getElementById("recBtn");e.textContent="■ STOP REC",e.classList.add("recording")}else{recorder.stop(),recording=!1;const e=document.getElementById("recBtn");e.textContent="● REC",e.classList.remove("recording")}};
+
+// TIMER
+setInterval(()=>{updDeck("A",deckA),updDeck("B",deckB)},100);
+function updDeck(e,t){if(t&&t.loaded){const o=t.immediateState.currentTime||0,a=t.buffer.duration;document.getElementById("time"+e).textContent=fmtTime(o),document.getElementById("duration"+e).textContent=fmtTime(a),document.getElementById("progress"+e).style.width=o/a*100+"%",o>=a-.1&&"started"===t.state&&(t.stop(),updPlayBtn("play"+e,!1))}}
+document.getElementById("progA").onclick=e=>{if(deckA.loaded){const t=e.offsetX/e.target.offsetWidth;deckA.seek(deckA.buffer.duration*t)}};
+document.getElementById("progB").onclick=e=>{if(deckB.loaded){const t=e.offsetX/e.target.offsetWidth;deckB.seek(deckB.buffer.duration*t)}};
+
+// UTILS
+function fmtTime(e){const t=Math.floor(e/60),o=Math.floor(e%60);return`${t.toString().padStart(2,"0")}:${o.toString().padStart(2,"0")}`}async function getBPM(e){const t=e.getChannelData(0),o=[];for(let e=0;e<t.length;e++)t[e]>.9&&(o.push(e),e+=1e4);if(o.length<2)return 120;const a=[];for(let e=1;e<o.length;e++)a.push(o[e]-o[e-1]);return 60/(a.reduce((e,t)=>e+t,0)/a.length/e.sampleRate)}function drawWave(e,t){const o=document.getElementById(e),a=o.getContext("2d");o.width=o.offsetWidth,o.height=o.offsetHeight;const n=t.getChannelData(0),r=Math.ceil(n.length/o.width),i=o.height/2;a.clearRect(0,0,o.width,o.height),a.strokeStyle="#3b82f6",a.lineWidth=1,a.beginPath();for(let e=0;e<o.width;e++){let t=1,s=-1;for(let o=0;o<r;o++){const a=n[e*r+o];a<t&&(t=a),a>s&&(s=a)}a.moveTo(e,(1+t)*i),a.lineTo(e,(1+s)*i)}a.stroke()}
+</script>
+</body>
+</html>
