@@ -1,341 +1,363 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ PRO</title>
-  
-  <!-- MANIFEST UDAH DITARO LANGSUNG DI SINI -->
-  <link rel="manifest" href='data:application/manifest+json,{"name":"DJ PRO - Mix & Effect","short_name":"DJ PRO","start_url":"./","display":"standalone","background_color":"%230a0a0a","theme_color":"%233b82f6","orientation":"any","icons":[{"src":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAPlJREFUeJzt3TEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwY3UAEe7tX3QAAAABJRU5ErkJggg==","sizes":"512x512","type":"image/png"}]}'>
-  
-  <meta name="theme-color" content="#3b82f6">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:system-ui;padding:12px}.header{text-align:center;padding:12px;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:10px;margin-bottom:12px;border:1px solid #3b82f6}.header h1{font-size:18px;text-shadow:0 0 10px #3b82f6}.status{background:#ef4444;padding:10px;text-align:center;border-radius:8px;font-weight:700;margin-bottom:12px;font-size:14px}.status.ready{background:#22c55e}.deck{background:#1a1a1a;padding:15px;border-radius:12px;margin-bottom:12px;border:2px solid #2a2a2a}.deck h2{color:#3b82f6;text-align:center;margin-bottom:10px;font-size:16px}.track-info{font-size:11px;color:#22c55e;text-align:center;margin:6px 0;min-height:15px}audio{width:100%;margin:8px 0;height:40px;border-radius:8px}.waveform{width:100%;height:60px;background:#0a0a0a;border-radius:6px;margin:8px 0;position:relative;overflow:hidden;cursor:pointer}#waveCanvas{width:100%;height:100%}.time-display{text-align:center;font-family:monospace;font-size:12px;color:#9ca3af;margin:4px 0}.jogwheel{width:140px;height:140px;margin:12px auto;border-radius:50%;background:radial-gradient(circle,#2a2a2a 0%,#0a0a0a 70%);border:3px solid #3b82f6;box-shadow:0 0 20px rgba(59,130,246,0.4);cursor:grab;position:relative;touch-action:none}.jogwheel::after{content:'';position:absolute;top:50%;left:50%;width:3px;height:40%;background:#3b82f6;transform:translate(-50%,-100%);border-radius:2px}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0}.btn{background:#2a2a2a;border:1px solid #3a3a3a;color:white;padding:10px;border-radius:6px;cursor:pointer;font-weight:600;font-size:11px;user-select:none}.btn:active{transform:scale(0.95)}.btn-play{background:#22c55e;border-color:#22c55e}.btn-play.pause{background:#f59e0b}.btn-cue{background:#3b82f6}.btn-loop{background:#2a2a2a}.btn-loop.active{background:#f59e0b}.btn-jedag{background:#ef4444}.slider-box{margin:10px 0}.slider-box label{display:flex;justify-content:space-between;font-size:10px;color:#9ca3af;margin-bottom:3px}.slider-box input{width:100%;height:5px}.fx-panel{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:12px;margin:12px 0}.fx-panel h3{margin-bottom:10px;color:#3b82f6;text-align:center;font-size:14px}.fx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fx-box{background:#0a0a0a;padding:10px;border-radius:6px}.fx-box h4{font-size:10px;margin-bottom:8px;color:#9ca3af;text-align:center}.eq-container{display:flex;gap:8px;justify-content:center}.eq-band{display:flex;flex-direction:column;align-items:center}.eq-band input{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:6px;height:80px}.eq-band label{font-size:8px;color:#9ca3af;margin-top:4px}input[type="file"]{width:100%;font-size:10px;margin-bottom:6px;color:#9ca3af}.rec-btn{width:100%;background:#ef4444;border:none;color:white;padding:12px;border-radius:8px;font-weight:700;margin-top:10px;font-size:14px}.rec-btn.recording{background:#22c55e;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ PRO - Jedag Jedug</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            padding-bottom: 70px!important; /* Biar gak ketutup banner iklan */
+            min-height: 100vh;
+        }
+
+       .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff0080;
+            text-shadow: 0 0 10px #ff0080;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+       .upload-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ff0080;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background: #2a2a2a;
+            border: 1px solid #ff0080;
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+       .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px;
+            background: linear-gradient(45deg, #ff0080, #7928ca);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff0080;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+       .effect-section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+       .effect-title {
+            color: #ff0080;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+       .slider-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #ff0080;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+       .jedag-mode {
+            background: linear-gradient(45deg, #ff0000, #ff8800)!important;
+            animation: jedag 0.5s infinite;
+        }
+
+        @keyframes jedag {
+            0%, 100% { box-shadow: 0 0 20px #ff0000; }
+            50% { box-shadow: 0 0 40px #ff8800; }
+        }
+
+       .visualizer {
+            width: 100%;
+            height: 100px;
+            background: #000;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #ff0080;
+        }
+    </style>
 </head>
 <body>
-  <div class="header"><h1>🎧 DJ PRO - UDAH FIX TOTAL</h1></div>
-  <div class="status" id="status">Pilih file MP3 dulu</div>
-  <div class="deck">
-    <h2>DECK A</h2>
-    <input type="file" id="fileA" accept="audio/*">
-    <div class="track-info" id="infoA">No Track</div>
-    <audio id="audioA" controls></audio>
-    <div class="waveform" id="waveform"><canvas id="waveCanvas"></canvas></div>
-    <div class="time-display"><span id="curTime">00:00</span> / <span id="durTime">00:00</span></div>
-    <div class="jogwheel" id="jogA"></div>
-    <div class="controls">
-      <button class="btn btn-play" id="playA">▶ PLAY</button>
-      <button class="btn btn-cue" id="cueA">CUE</button>
-      <button class="btn btn-loop" id="loopA">LOOP 4B</button>
-    </div>
-    <div class="slider-box">
-      <label>TEMPO/PITCH: <span id="speedAVal">1.00x</span></label>
-      <input type="range" id="speedA" min="0.5" max="1.5" step="0.01" value="1">
-    </div>
-    <div class="controls">
-      <button class="btn btn-jedag" id="jedagA">🔥 JEDAG</button>
-      <button class="btn" id="sadA">😢 SAD</button>
-      <button class="btn" id="lofiA">☕ LOFI</button>
-    </div>
-  </div>
-  <div class="fx-panel">
-    <h3>🔊 MASTER FX - UDAH BISA SEMUA</h3>
-    <div class="fx-grid">
-      <div class="fx-box">
-        <h4>EQ 3-BAND</h4>
-        <div class="eq-container">
-          <div class="eq-band"><input type="range" id="bass" min="-20" max="20" value="0" orient="vertical"><label>BASS</label></div>
-          <div class="eq-band"><input type="range" id="mid" min="-20" max="20" value="0" orient="vertical"><label>MID</label></div>
-          <div class="eq-band"><input type="range" id="treble" min="-20" max="20" value="0" orient="vertical"><label>TREBLE</label></div>
+    <div class="container">
+        <h1>🎧 DJ PRO JEDAG 🎧</h1>
+
+        <div class="upload-section">
+            <input type="file" id="audioFile" accept="audio/*">
+            <audio id="audioPlayer" controls style="width:100%; margin-top:10px;"></audio>
+            <canvas id="visualizer" class="visualizer"></canvas>
         </div>
-      </div>
-      <div class="fx-box">
-        <h4>REVERB</h4>
-        <div class="slider-box"><label>Mix: <span id="reverbVal">0%</span></label><input type="range" id="reverb" min="0" max="100" value="0"></div>
-        <div class="slider-box"><label>Size: <span id="sizeVal">2s</span></label><input type="range" id="size" min="0.1" max="10" step="0.1" value="2"></div>
-      </div>
-      <div class="fx-box">
-        <h4>ECHO</h4>
-        <div class="slider-box"><label>Mix: <span id="echoVal">0%</span></label><input type="range" id="echo" min="0" max="100" value="0"></div>
-        <div class="slider-box"><label>Time: <span id="echoTimeVal">0.3s</span></label><input type="range" id="echoTime" min="0.05" max="1" step="0.05" value="0.3"></div>
-      </div>
-      <div class="fx-box">
-        <h4>FILTER</h4>
-        <div class="slider-box"><label>Cutoff: <span id="filterVal">20kHz</span></label><input type="range" id="filter" min="20" max="20000" value="20000"></div>
-        <div class="slider-box"><label>Res: <span id="resVal">0</span></label><input type="range" id="resonance" min="0" max="20" value="0"></div>
-      </div>
+
+        <div class="controls">
+            <button id="playBtn">▶️ PLAY</button>
+            <button id="pauseBtn">⏸️ PAUSE</button>
+            <button id="recordBtn">🔴 RECORD</button>
+            <button id="jedagBtn">💥 JEDAG MODE</button>
+        </div>
+
+        <div class="effect-section">
+            <div class="effect-title">🎚️ REVERB & ECHO</div>
+            <div class="slider-group">
+                <label>Reverb: <span id="reverbVal">0</span></label>
+                <input type="range" id="reverb" min="0" max="1" step="0.01" value="0">
+            </div>
+            <div class="slider-group">
+                <label>Echo Delay: <span id="echoVal">0</span>ms</label>
+                <input type="range" id="echo" min="0" max="1" step="0.01" value="0">
+            </div>
+        </div>
+
+        <div class="effect-section">
+            <div class="effect-title">🔊 BASS BOOST</div>
+            <div class="slider-group">
+                <label>Bass: <span id="bassVal">0</span>dB</label>
+                <input type="range" id="bass" min="0" max="20" step="1" value="0">
+            </div>
+            <div class="slider-group">
+                <label>Treble: <span id="trebleVal">0</span>dB</label>
+                <input type="range" id="treble" min="0" max="20" step="1" value="0">
+            </div>
+        </div>
     </div>
-  </div>
-  <button class="rec-btn" id="recBtn">● REC MIX</button>
-<script>
-let audioA = document.getElementById('audioA');
-let audioCtx, source, bassEQ, midEQ, trebleEQ, filter, reverb, echo, gainNode, analyser;
-let reverbGain, echoGain;
-let cuePoint = 0, isLooping = false, loopStart = 0, loopEnd = 0;
-let recorder, chunks = [], animationId;
-document.getElementById('fileA').onchange = async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  document.getElementById('status').textContent = '⏳ Loading...';
-  const url = URL.createObjectURL(file);
-  audioA.src = url;
-  document.getElementById('infoA').textContent = file.name;
-  audioA.onloadedmetadata = () => {
-    document.getElementById('durTime').textContent = fmtTime(audioA.duration);
-    document.getElementById('status').textContent = '✅ READY! Klik PLAY';
-    document.getElementById('status').className = 'status ready';
-    setupAudio();
-    drawWaveform();
-  };
-  audioA.onerror = () => {
-    document.getElementById('status').textContent = '❌ File error! Coba MP3 lain';
-    alert('File rusak/bukan MP3. Download dari Y2mate format MP3 ya');
-  };
-};
-function setupAudio() {
-  if (audioCtx) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  source = audioCtx.createMediaElementSource(audioA);
-  bassEQ = audioCtx.createBiquadFilter(); bassEQ.type = 'lowshelf'; bassEQ.frequency.value = 200;
-  midEQ = audioCtx.createBiquadFilter(); midEQ.type = 'peaking'; midEQ.frequency.value = 1000; midEQ.Q.value = 1;
-  trebleEQ = audioCtx.createBiquadFilter(); trebleEQ.type = 'highshelf'; trebleEQ.frequency.value = 3000;
-  filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 20000;
-  echo = audioCtx.createDelay(1.0); echo.delayTime.value = 0.3;
-  echoGain = audioCtx.createGain(); echoGain.gain.value = 0;
-  echo.connect(echoGain); echoGain.connect(echo);
-  reverb = audioCtx.createConvolver();
-  reverbGain = audioCtx.createGain(); reverbGain.gain.value = 0;
-  createReverb(2);
-  analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
-  gainNode = audioCtx.createGain();
-  source.connect(bassEQ).connect(midEQ).connect(trebleEQ).connect(filter);
-  filter.connect(gainNode);
-  filter.connect(echo);
-  filter.connect(reverbGain);
-  echoGain.connect(gainNode);
-  reverbGain.connect(reverb);
-  reverb.connect(gainNode);
-  gainNode.connect(analyser).connect(audioCtx.destination);
-}
-function createReverb(seconds) {
-  const rate = audioCtx.sampleRate;
-  const length = rate * seconds;
-  const impulse = audioCtx.createBuffer(2, length, rate);
-  for (let i = 0; i < 2; i++) {
-    const channel = impulse.getChannelData(i);
-    for (let j = 0; j < length; j++) {
-      channel[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / length, 2);
-    }
-  }
-  reverb.buffer = impulse;
-}
-document.getElementById('playA').onclick = () => {
-  if (audioA.paused) {
-    audioA.play();
-    document.getElementById('playA').textContent = '⏸ PAUSE';
-    document.getElementById('playA').classList.add('pause');
-  } else {
-    audioA.pause();
-    document.getElementById('playA').textContent = '▶ PLAY';
-    document.getElementById('playA').classList.remove('pause');
-  }
-};
-const cueBtn = document.getElementById('cueA');
-cueBtn.onmousedown = () => {
-  audioA.currentTime = cuePoint;
-  audioA.play();
-  cueBtn.style.background = '#22c55e';
-};
-cueBtn.onmouseup = () => {
-  audioA.pause();
-  cueBtn.style.background = '#3b82f6';
-};
-cueBtn.oncontextmenu = (e) => {
-  e.preventDefault();
-  cuePoint = audioA.currentTime;
-  cueBtn.textContent = 'CUE ✓';
-  setTimeout(() => cueBtn.textContent = 'CUE', 800);
-};
-document.getElementById('loopA').onclick = () => {
-  isLooping =!isLooping;
-  const btn = document.getElementById('loopA');
-  if (isLooping) {
-    loopStart = audioA.currentTime;
-    loopEnd = loopStart + 8;
-    btn.classList.add('active');
-    btn.textContent = 'LOOP ON';
-  } else {
-    btn.classList.remove('active');
-    btn.textContent = 'LOOP 4B';
-  }
-};
-document.getElementById('speedA').oninput = (e) => {
-  audioA.playbackRate = parseFloat(e.target.value);
-  document.getElementById('speedAVal').textContent = parseFloat(e.target.value).toFixed(2) + 'x';
-};
-document.getElementById('bass').oninput = (e) => {
-  if (bassEQ) bassEQ.gain.value = parseFloat(e.target.value);
-};
-document.getElementById('mid').oninput = (e) => {
-  if (midEQ) midEQ.gain.value = parseFloat(e.target.value);
-};
-document.getElementById('treble').oninput = (e) => {
-  if (trebleEQ) trebleEQ.gain.value = parseFloat(e.target.value);
-};
-document.getElementById('filter').oninput = (e) => {
-  if (filter) filter.frequency.value = parseFloat(e.target.value);
-  const v = parseFloat(e.target.value);
-  document.getElementById('filterVal').textContent = v >= 1000? (v/1000).toFixed(1)+'kHz' : v+'Hz';
-};
-document.getElementById('resonance').oninput = (e) => {
-  if (filter) filter.Q.value = parseFloat(e.target.value);
-  document.getElementById('resVal').textContent = e.target.value;
-};
-document.getElementById('reverb').oninput = (e) => {
-  const val = parseFloat(e.target.value);
-  if (reverbGain) reverbGain.gain.value = val / 100;
-  document.getElementById('reverbVal').textContent = val + '%';
-};
-document.getElementById('size').oninput = (e) => {
-  createReverb(parseFloat(e.target.value));
-  document.getElementById('sizeVal').textContent = e.target.value + 's';
-};
-document.getElementById('echo').oninput = (e) => {
-  const val = parseFloat(e.target.value);
-  if (echoGain) echoGain.gain.value = val / 100;
-  document.getElementById('echoVal').textContent = val + '%';
-};
-document.getElementById('echoTime').oninput = (e) => {
-  if (echo) echo.delayTime.value = parseFloat(e.target.value);
-  document.getElementById('echoTimeVal').textContent = e.target.value + 's';
-};
-document.getElementById('jedagA').onclick = () => {
-  document.getElementById('speedA').value = 0.85;
-  document.getElementById('speedA').dispatchEvent(new Event('input'));
-  document.getElementById('bass').value = 18;
-  document.getElementById('bass').dispatchEvent(new Event('input'));
-  document.getElementById('reverb').value = 15;
-  document.getElementById('reverb').dispatchEvent(new Event('input'));
-};
-document.getElementById('sadA').onclick = () => {
-  document.getElementById('speedA').value = 0.80;
-  document.getElementById('speedA').dispatchEvent(new Event('input'));
-  document.getElementById('reverb').value = 40;
-  document.getElementById('reverb').dispatchEvent(new Event('input'));
-  document.getElementById('treble').value = -5;
-  document.getElementById('treble').dispatchEvent(new Event('input'));
-  document.getElementById('filter').value = 8000;
-  document.getElementById('filter').dispatchEvent(new Event('input'));
-};
-document.getElementById('lofiA').onclick = () => {
-  document.getElementById('speedA').value = 0.85;
-  document.getElementById('speedA').dispatchEvent(new Event('input'));
-  document.getElementById('filter').value = 4000;
-  document.getElementById('filter').dispatchEvent(new Event('input'));
-  document.getElementById('resonance').value = 8;
-  document.getElementById('resonance').dispatchEvent(new Event('input'));
-  document.getElementById('echo').value = 15;
-  document.getElementById('echo').dispatchEvent(new Event('input'));
-  document.getElementById('bass').value = 8;
-  document.getElementById('bass').dispatchEvent(new Event('input'));
-  document.getElementById('treble').value = -10;
-  document.getElementById('treble').dispatchEvent(new Event('input'));
-};
-let isDragging = false, rotation = 0;
-const jog = document.getElementById('jogA');
-jog.onmousedown = jog.ontouchstart = () => { isDragging = true; };
-document.onmouseup = document.ontouchend = () => { isDragging = false; };
-document.onmousemove = document.ontouchmove = (e) => {
-  if (!isDragging) return;
-  const x = e.clientX || e.touches[0].clientX;
-  rotation += e.movementX || 2;
-  jog.style.transform = `rotate(${rotation}deg)`;
-  audioA.playbackRate = 1 + (e.movementX || 0) * 0.01;
-  clearTimeout(jog.timeout);
-  jog.timeout = setTimeout(() => {
-    audioA.playbackRate = parseFloat(document.getElementById('speedA').value);
-  }, 100);
-};
-function drawWaveform() {
-  const canvas = document.getElementById('waveCanvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-  function draw() {
-    animationId = requestAnimationFrame(draw);
-    if (!analyser) return;
-    const data = new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteTimeDomainData(data);
-    ctx.fillStyle = '#0a0a0a';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#3b82f6';
-    ctx.beginPath();
-    const sliceWidth = canvas.width / data.length;
-    let x = 0;
-    for (let i = 0; i < data.length; i++) {
-      const v = data[i] / 128.0;
-      const y = v * canvas.height / 2;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-      x += sliceWidth;
-    }
-    ctx.stroke();
-  }
-  draw();
-}
-document.getElementById('waveform').onclick = (e) => {
-  const rect = e.target.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const percent = x / rect.width;
-  audioA.currentTime = audioA.duration * percent;
-};
-setInterval(() => {
-  if (!audioA.paused) {
-    document.getElementById('curTime').textContent = fmtTime(audioA.currentTime);
-    if (isLooping && audioA.currentTime >= loopEnd) {
-      audioA.currentTime = loopStart;
-    }
-  }
-}, 100);
-audioA.onended = () => {
-  document.getElementById('playA').textContent = '▶ PLAY';
-  document.getElementById('playA').classList.remove('pause');
-};
-document.getElementById('recBtn').onclick = async () => {
-  if (!audioCtx) {
-    alert('Play lagu dulu baru REC!');
-    return;
-  }
-  if (!recorder) {
-    const dest = audioCtx.createMediaStreamDestination();
-    gainNode.connect(dest);
-    recorder = new MediaRecorder(dest.stream);
-    recorder.ondataavailable = e => chunks.push(e.data);
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, {type: 'audio/webm'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'DJ_Mix_' + Date.now() + '.webm';
-      a.click();
-      chunks = [];
-    };
-    recorder.start();
-    document.getElementById('recBtn').textContent = '■ STOP REC';
-    document.getElementById('recBtn').classList.add('recording');
-  } else {
-    recorder.stop();
-    recorder = null;
-    document.getElementById('recBtn').textContent = '● REC MIX';
-    document.getElementById('recBtn').classList.remove('recording');
-  }
-};
-function fmtTime(s){const m=Math.floor(s/60),sec=Math.floor(s%60);return`${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`}
-</script>
+
+    <!-- IKLAN BANNER ADMOB - PUNYA KAKAK -->
+    <div style="position:fixed; bottom:0; left:0; width:100%; text-align:center; background:#0a0a0a; padding:4px 0; z-index:9999; border-top:1px solid #ff0080;">
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:50px"
+             data-ad-client="ca-app-pub-7494355873576252"
+             data-ad-slot="9622283309"></ins>
+    </div>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-7494355873576252" crossorigin="anonymous"></script>
+    <script>
+        // Inisialisasi Iklan
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        // AUDIO CONTEXT SETUP
+        let audioContext;
+        let audioSource;
+        let gainNode;
+        let bassFilter;
+        let trebleFilter;
+        let reverbNode;
+        let delayNode;
+        let analyser;
+        let mediaRecorder;
+        let recordedChunks = [];
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioFile = document.getElementById('audioFile');
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+
+        // INIT AUDIO
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                audioSource = audioContext.createMediaElementSource(audioPlayer);
+
+                gainNode = audioContext.createGain();
+                bassFilter = audioContext.createBiquadFilter();
+                trebleFilter = audioContext.createBiquadFilter();
+                delayNode = audioContext.createDelay();
+                analyser = audioContext.createAnalyser();
+
+                bassFilter.type = 'lowshelf';
+                bassFilter.frequency.value = 200;
+                trebleFilter.type = 'highshelf';
+                trebleFilter.frequency.value = 3000;
+
+                audioSource.connect(bassFilter);
+                bassFilter.connect(trebleFilter);
+                trebleFilter.connect(delayNode);
+                delayNode.connect(gainNode);
+                gainNode.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                analyser.fftSize = 256;
+                visualize();
+            }
+        }
+
+        // FILE UPLOAD
+        audioFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audioPlayer.src = url;
+                initAudio();
+            }
+        });
+
+        // CONTROLS
+        document.getElementById('playBtn').addEventListener('click', () => {
+            initAudio();
+            audioPlayer.play();
+        });
+
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
+        document.getElementById('jedagBtn').addEventListener('click', function() {
+            this.classList.toggle('jedag-mode');
+            if (this.classList.contains('jedag-mode')) {
+                document.getElementById('bass').value = 15;
+                document.getElementById('reverb').value = 0.6;
+                document.getElementById('echo').value = 0.3;
+                updateEffects();
+            } else {
+                document.getElementById('bass').value = 0;
+                document.getElementById('reverb').value = 0;
+                document.getElementById('echo').value = 0;
+                updateEffects();
+            }
+        });
+
+        // EFFECTS
+        function updateEffects() {
+            if (!audioContext) return;
+
+            const reverbVal = document.getElementById('reverb').value;
+            const echoVal = document.getElementById('echo').value;
+            const bassVal = document.getElementById('bass').value;
+            const trebleVal = document.getElementById('treble').value;
+
+            document.getElementById('reverbVal').textContent = reverbVal;
+            document.getElementById('echoVal').textContent = Math.round(echoVal * 500);
+            document.getElementById('bassVal').textContent = bassVal;
+            document.getElementById('trebleVal').textContent = trebleVal;
+
+            bassFilter.gain.value = bassVal;
+            trebleFilter.gain.value = trebleVal;
+            delayNode.delayTime.value = echoVal * 0.5;
+        }
+
+        document.getElementById('reverb').addEventListener('input', updateEffects);
+        document.getElementById('echo').addEventListener('input', updateEffects);
+        document.getElementById('bass').addEventListener('input', updateEffects);
+        document.getElementById('treble').addEventListener('input', updateEffects);
+
+        // VISUALIZER
+        function visualize() {
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const barHeight = dataArray[i] / 2;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                    gradient.addColorStop(0, '#ff0080');
+                    gradient.addColorStop(1, '#7928ca');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+            }
+            draw();
+        }
+
+        // RECORD
+        document.getElementById('recordBtn').addEventListener('click', function() {
+            if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+                const dest = audioContext.createMediaStreamDestination();
+                gainNode.connect(dest);
+                mediaRecorder = new MediaRecorder(dest.stream);
+                recordedChunks = [];
+
+                mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'DJ-Mix-Recording.webm';
+                    a.click();
+                };
+
+                mediaRecorder.start();
+                this.textContent = '⏹️ STOP RECORD';
+                this.style.background = 'linear-gradient(45deg, #ff0000, #880000)';
+            } else {
+                mediaRecorder.stop();
+                this.textContent = '🔴 RECORD';
+                this.style.background = 'linear-gradient(45deg, #ff0080, #7928ca)';
+            }
+        });
+    </script>
 </body>
 </html>
