@@ -3,55 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ WEB PRO FULL</title>
+  <title>DJ WEB PRO</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a0a0a; color: #e5e5e5; font-family: system-ui; overflow-x: hidden; }
-   .header { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 15px 20px; text-align: center; border-bottom: 2px solid #3b82f6; }
-   .header h1 { font-size: 24px; text-shadow: 0 0 20px #3b82f6; }
-   .status { background: #ef4444; padding: 10px; text-align: center; font-size: 14px; font-weight: 600; }
-   .status.ready { background: #22c55e; }
-   .dj-container { display: flex; gap: 15px; padding: 20px; max-width: 1400px; margin: 0 auto; }
-   .deck { flex: 1; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px; }
-   .deck h2 { text-align: center; margin-bottom: 15px; color: #3b82f6; font-size: 18px; }
-   .waveform { width: 100%; height: 80px; background: #0a0a0a; border-radius: 8px; margin: 15px 0; }
-   .waveform canvas { width: 100%; height: 100%; border-radius: 8px; }
-   .jogwheel { width: 180px; height: 180px; margin: 20px auto; border-radius: 50%; background: radial-gradient(circle, #2a2a2a 0%, #0a0a0a 70%); border: 4px solid #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); cursor: grab; position: relative; }
-   .jogwheel:active { cursor: grabbing; box-shadow: 0 0 50px rgba(59, 130, 246, 0.8); }
-   .jogwheel::after { content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 40%; background: #3b82f6; transform: translate(-50%, -100%); border-radius: 2px; }
-   .bpm-display { text-align: center; font-family: monospace; font-size: 28px; color: #22c55e; margin: 10px 0; }
-   .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
-   .btn { background: #2a2a2a; border: 1px solid #3a3a3a; color: white; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
-   .btn:hover { background: #3b82f6; border-color: #3b82f6; }
-   .btn-play { background: #22c55e; border-color: #22c55e; }
-   .btn-play.stop { background: #ef4444; border-color: #ef4444; }
-   .slider-group { margin: 12px 0; }
-   .slider-group label { display: block; font-size: 11px; color: #9ca3af; margin-bottom: 4px; display: flex; justify-content: space-between; }
-   .slider-group input[type="range"] { width: 100%; height: 6px; background: #2a2a2a; border-radius: 3px; outline: none; }
-   .slider-group input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #3b82f6; border-radius: 50%; cursor: pointer; }
-   .mixer { width: 140px; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
-   .mixer h3 { margin-bottom: 20px; font-size: 14px; color: #3b82f6; }
-   .crossfader { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 250px; background: #2a2a2a; margin: 20px 0; }
-   .fx-panel { background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px; margin: 20px; }
-   .fx-panel h3 { margin-bottom: 15px; color: #3b82f6; text-align: center; }
-   .fx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-   .fx-box { background: #0a0a0a; padding: 15px; border-radius: 8px; border: 1px solid #2a2a2a; }
-   .fx-box h4 { font-size: 12px; margin-bottom: 12px; color: #9ca3af; text-align: center; }
-   .eq-container { display: flex; gap: 15px; justify-content: center; }
-   .eq-band { display: flex; flex-direction: column; align-items: center; }
-   .eq-band input[type="range"] { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 120px; }
-   .eq-band label { font-size: 10px; color: #9ca3af; margin-top: 8px; }
+    body { background: #0a0a0a; color: #e5e5e5; font-family: system-ui; }
+  .header { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 15px 20px; text-align: center; border-bottom: 2px solid #3b82f6; }
+  .header h1 { font-size: 22px; text-shadow: 0 0 20px #3b82f6; }
+  .status { background: #ef4444; padding: 10px; text-align: center; font-size: 14px; font-weight: 600; }
+  .status.ready { background: #22c55e; }
+  .dj-container { display: flex; gap: 15px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+  .deck { flex: 1; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px; }
+  .deck h2 { text-align: center; margin-bottom: 15px; color: #3b82f6; font-size: 18px; }
+  .waveform { width: 100%; height: 80px; background: #0a0a0a; border-radius: 8px; margin: 15px 0; }
+  .waveform canvas { width: 100%; height: 100%; border-radius: 8px; }
+  .jogwheel { width: 180px; height: 180px; margin: 20px auto; border-radius: 50%; background: radial-gradient(circle, #2a2a2a 0%, #0a0a0a 70%); border: 4px solid #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); cursor: grab; position: relative; transition: transform 0.05s; }
+  .jogwheel:active { cursor: grabbing; }
+  .jogwheel::after { content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 40%; background: #3b82f6; transform: translate(-50%, -100%); border-radius: 2px; }
+  .bpm-display { text-align: center; font-family: monospace; font-size: 28px; color: #22c55e; margin: 10px 0; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
+  .btn { background: #2a2a2a; border: 1px solid #3a3a3a; color: white; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
+  .btn:active { transform: scale(0.95); }
+  .btn-play { background: #22c55e; border-color: #22c55e; }
+  .btn-play.stop { background: #ef4444; border-color: #ef4444; }
+  .slider-group { margin: 12px 0; }
+  .slider-group label { display: block; font-size: 11px; color: #9ca3af; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .slider-group input[type="range"] { width: 100%; height: 6px; background: #2a2a2a; border-radius: 3px; outline: none; }
+  .slider-group input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #3b82f6; border-radius: 50%; cursor: pointer; }
+  .mixer { width: 140px; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
+  .mixer h3 { margin-bottom: 20px; font-size: 14px; color: #3b82f6; }
+  .crossfader { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 250px; background: #2a2a2a; margin: 20px 0; }
+  .fx-panel { background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px; margin: 20px; }
+  .fx-panel h3 { margin-bottom: 15px; color: #3b82f6; text-align: center; }
+  .fx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .fx-box { background: #0a0a0a; padding: 15px; border-radius: 8px; border: 1px solid #2a2a2a; }
+  .fx-box h4 { font-size: 12px; margin-bottom: 12px; color: #9ca3af; text-align: center; }
+  .eq-container { display: flex; gap: 15px; justify-content: center; }
+  .eq-band { display: flex; flex-direction: column; align-items: center; }
+  .eq-band input[type="range"] { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 120px; }
+  .eq-band label { font-size: 10px; color: #9ca3af; margin-top: 8px; }
     input[type="file"] { width: 100%; font-size: 11px; margin-bottom: 10px; color: #9ca3af; }
-    @media (max-width: 900px) {.dj-container { flex-direction: column; }.mixer { width: 100%; flex-direction: row; height: 100px; }.crossfader { writing-mode: initial; width: 200px; height: 8px; } }
+    @media (max-width: 900px) {.dj-container { flex-direction: column; }.mixer { width: 100%; flex-direction: row; height: 100px; justify-content: center; }.crossfader { writing-mode: initial; width: 200px; height: 8px; } }
   </style>
 </head>
 <body>
-  <div class="header"><h1>🎧 DJ WEB PRO - BASS BOOST + REVERB + SLOW</h1></div>
+  <div class="header"><h1>🎧 DJ WEB PRO - BASS + REVERB + SLOW</h1></div>
   <div class="status" id="status">⚠️ KLIK PLAY DI SALAH SATU DECK BUAT AKTIFIN AUDIO</div>
 
   <div class="dj-container">
-    <!-- DECK A -->
     <div class="deck">
       <h2>DECK A</h2>
       <input type="file" id="fileA" accept="audio/*">
@@ -74,7 +78,6 @@
       </div>
     </div>
 
-    <!-- MIXER -->
     <div class="mixer">
       <h3>MIXER</h3>
       <div style="font-size:10px; color:#9ca3af;">A</div>
@@ -82,7 +85,6 @@
       <div style="font-size:10px; color:#9ca3af;">B</div>
     </div>
 
-    <!-- DECK B -->
     <div class="deck">
       <h2>DECK B</h2>
       <input type="file" id="fileB" accept="audio/*">
@@ -106,7 +108,6 @@
     </div>
   </div>
 
-  <!-- FX PANEL -->
   <div class="fx-panel">
     <h3>🔊 MASTER FX - BASS BOOST + REVERB + FILTER + ECHO</h3>
     <div class="fx-grid">
@@ -166,231 +167,6 @@
     </div>
   </div>
 
-<script>
-let deckA, deckB, crossFade, masterEQ, masterReverb, masterDelay, masterFilter;
-let audioReady = false;
-let bpmA = 120, bpmB = 120;
-let loopA = false, loopB = false;
-
-async function startAudio() {
-  if (audioReady) return true;
-  try {
-    await Tone.start();
-    audioReady = true;
-    document.getElementById('status').textContent = '✅ AUDIO READY! Upload lagu terus Play';
-    document.getElementById('status').className = 'status ready';
-
-    masterEQ = new Tone.EQ3(0, 0, 0).toDestination();
-    masterFilter = new Tone.Filter(20000, "lowpass").connect(masterEQ);
-    masterReverb = new Tone.Reverb({ decay: 2, wet: 0 }).connect(masterFilter);
-    masterDelay = new Tone.FeedbackDelay({ delayTime: "8n", feedback: 0.5, wet: 0 }).connect(masterReverb);
-    crossFade = new Tone.CrossFade(0.5).connect(masterDelay);
-
-    deckA = new Tone.Player().connect(crossFade.a);
-    deckB = new Tone.Player().connect(crossFade.b);
-    return true;
-  } catch (e) {
-    alert('Error init audio: ' + e);
-    return false;
-  }
-}
-
-document.getElementById('fileA').onchange = async e => {
-  if (!await startAudio()) return;
-  if (!e.target.files[0]) return;
-  await deckA.load(URL.createObjectURL(e.target.files[0]));
-  drawWaveform('waveA', deckA.buffer);
-  bpmA = await detectBPM(deckA.buffer);
-  document.getElementById('bpmA').textContent = bpmA.toFixed(1) + ' BPM';
-};
-
-document.getElementById('fileB').onchange = async e => {
-  if (!await startAudio()) return;
-  if (!e.target.files[0]) return;
-  await deckB.load(URL.createObjectURL(e.target.files[0]));
-  drawWaveform('waveB', deckB.buffer);
-  bpmB = await detectBPM(deckB.buffer);
-  document.getElementById('bpmB').textContent = bpmB.toFixed(1) + ' BPM';
-};
-
-document.getElementById('playA').onclick = async () => {
-  if (!await startAudio()) return;
-  if (!deckA.loaded) return alert('Upload lagu dulu di Deck A');
-  if (deckA.state === 'started') {
-    deckA.stop();
-    document.getElementById('playA').textContent = '▶ PLAY';
-    document.getElementById('playA').classList.remove('stop');
-  } else {
-    deckA.start();
-    document.getElementById('playA').textContent = '■ STOP';
-    document.getElementById('playA').classList.add('stop');
-  }
-};
-
-document.getElementById('playB').onclick = async () => {
-  if (!await startAudio()) return;
-  if (!deckB.loaded) return alert('Upload lagu dulu di Deck B');
-  if (deckB.state === 'started') {
-    deckB.stop();
-    document.getElementById('playB').textContent = '▶ PLAY';
-    document.getElementById('playB').classList.remove('stop');
-  } else {
-    deckB.start();
-    document.getElementById('playB').textContent = '■ STOP';
-    document.getElementById('playB').classList.add('stop');
-  }
-};
-
-document.getElementById('cueA').onclick = () => deckA.seek(0);
-document.getElementById('cueB').onclick = () => deckB.seek(0);
-
-document.getElementById('loopA').onclick = () => {
-  loopA =!loopA;
-  deckA.loop = loopA;
-  document.getElementById('loopA').classList.toggle('active');
-};
-
-document.getElementById('loopB').onclick = () => {
-  loopB =!loopB;
-  deckB.loop = loopB;
-  document.getElementById('loopB').classList.toggle('active');
-};
-
-document.getElementById('tempoA').oninput = e => {
-  deckA.playbackRate = parseFloat(e.target.value);
-  document.getElementById('tempoAVal').textContent = parseFloat(e.target.value).toFixed(2) + 'x';
-};
-
-document.getElementById('tempoB').oninput = e => {
-  deckB.playbackRate = parseFloat(e.target.value);
-  document.getElementById('tempoBVal').textContent = parseFloat(e.target.value).toFixed(2) + 'x';
-};
-
-document.getElementById('volA').oninput = e => {
-  deckA.volume.value = parseFloat(e.target.value);
-  document.getElementById('volAVal').textContent = e.target.value + 'dB';
-};
-
-document.getElementById('volB').oninput = e => {
-  deckB.volume.value = parseFloat(e.target.value);
-  document.getElementById('volBVal').textContent = e.target.value + 'dB';
-};
-
-document.getElementById('crossfader').oninput = e => crossFade.fade.value = parseFloat(e.target.value);
-
-document.getElementById('syncA').onclick = () => {
-  const ratio = bpmB / bpmA;
-  deckA.playbackRate = ratio;
-  document.getElementById('tempoA').value = ratio;
-  document.getElementById('tempoAVal').textContent = ratio.toFixed(2) + 'x';
-};
-
-document.getElementById('syncB').onclick = () => {
-  const ratio = bpmA / bpmB;
-  deckB.playbackRate = ratio;
-  document.getElementById('tempoB').value = ratio;
-  document.getElementById('tempoBVal').textContent = ratio.toFixed(2) + 'x';
-};
-
-document.getElementById('bass').oninput = e => masterEQ.low.value = parseFloat(e.target.value);
-document.getElementById('mid').oninput = e => masterEQ.mid.value = parseFloat(e.target.value);
-document.getElementById('treble').oninput = e => masterEQ.high.value = parseFloat(e.target.value);
-
-document.getElementById('reverb').oninput = e => {
-  masterReverb.wet.value = parseFloat(e.target.value);
-  document.getElementById('reverbVal').textContent = Math.round(e.target.value * 100) + '%';
-};
-
-document.getElementById('decay').oninput = e => {
-  masterReverb.decay = parseFloat(e.target.value);
-  document.getElementById('decayVal').textContent = parseFloat(e.target.value).toFixed(1) + 's';
-};
-
-document.getElementById('echo').oninput = e => {
-  masterDelay.wet.value = parseFloat(e.target.value);
-  document.getElementById('echoVal').textContent = Math.round(e.target.value * 100) + '%';
-};
-
-document.getElementById('echoTime').oninput = e => {
-  masterDelay.delayTime.value = parseFloat(e.target.value);
-  document.getElementById('echoTimeVal').textContent = parseFloat(e.target.value).toFixed(2) + 's';
-};
-
-document.getElementById('filter').oninput = e => {
-  masterFilter.frequency.value = parseFloat(e.target.value);
-  const val = parseFloat(e.target.value);
-  document.getElementById('filterVal').textContent = val >= 1000? (val/1000).toFixed(1) + 'kHz' : val + 'Hz';
-};
-
-document.getElementById('resonance').oninput = e => {
-  masterFilter.Q.value = parseFloat(e.target.value);
-  document.getElementById('resVal').textContent = e.target.value;
-};
-
-// JOGWHEEL SCRATCH
-[['jogA', 'tempoA', () => deckA], ['jogB', 'tempoB', () => deckB]].forEach(([jogId, tempoId, getDeck]) => {
-  const jog = document.getElementById(jogId);
-  let isDragging = false;
-  let rotation = 0;
-
-  jog.onmousedown = () => isDragging = true;
-  document.onmouseup = () => { isDragging = false; };
-  document.onmousemove = e => {
-    if (isDragging && getDeck().loaded) {
-      rotation += e.movementX;
-      jog.style.transform = `rotate(${rotation}deg)`;
-      const deck = getDeck();
-      const currentRate = parseFloat(document.getElementById(tempoId).value);
-      deck.playbackRate = currentRate + (e.movementX * 0.01);
-      clearTimeout(deck.scratchTimeout);
-      deck.scratchTimeout = setTimeout(() => deck.playbackRate = currentRate, 100);
-    }
-  };
-});
-
-// BPM DETECT
-async function detectBPM(buffer) {
-  const data = buffer.getChannelData(0);
-  const peaks = [];
-  const threshold = 0.9;
-  for(let i = 0; i < data.length; i++) {
-    if(data[i] > threshold) {
-      peaks.push(i);
-      i += 10000;
-    }
-  }
-  if(peaks.length < 2) return 120;
-  const intervals = [];
-  for(let i = 1; i < peaks.length; i++) intervals.push(peaks[i] - peaks[i-1]);
-  const avg = intervals.reduce((a,b) => a+b, 0) / intervals.length;
-  return 60 / (avg / buffer.sampleRate);
-}
-
-// WAVEFORM
-function drawWaveform(id, buffer) {
-  const canvas = document.getElementById(id);
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-  const data = buffer.getChannelData(0);
-  const step = Math.ceil(data.length / canvas.width);
-  const amp = canvas.height / 2;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.strokeStyle = '#3b82f6';
-  ctx.lineWidth = 2;
-  for(let i = 0; i < canvas.width; i++) {
-    let min = 1.0, max = -1.0;
-    for(let j = 0; j < step; j++) {
-      const datum = data[i * step + j];
-      if(datum < min) min = datum;
-      if(datum > max) max = datum;
-    }
-    ctx.moveTo(i, (1 + min) * amp);
-    ctx.lineTo(i, (1 + max) * amp);
-  }
-  ctx.stroke();
-}
-</script>
+  <script src="app.js"></script>
 </body>
 </html>
