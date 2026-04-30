@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Web Full FX</title>
+  <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: #e5e5e5; font-family: system-ui; }
+   .header { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 15px 20px; text-align: center; border-bottom: 2px solid #3b82f6; }
+   .header h1 { font-size: 24px; text-shadow: 0 0 20px #3b82f6; }
+   .dj-container { display: flex; gap: 15px; padding: 20px; max-width: 1400px; margin: 0 auto; }
+   .deck { flex: 1; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px; }
+   .deck h2 { text-align: center; margin-bottom: 15px; color: #3b82f6; }
+   .waveform { width: 100%; height: 80px; background: #0a0a0a; border-radius: 8px; margin: 15px 0; position: relative; overflow: hidden; }
+   .waveform canvas { width: 100%; height: 100%; }
+   .jogwheel {
+      width: 180px; height: 180px; margin: 20px auto; border-radius: 50%;
+      background: radial-gradient(circle, #2a2a2a 0%, #0a0a0a 70%);
+      border: 4px solid #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), inset 0 0 20px rgba(0,0,0,0.5);
+      cursor: grab; position: relative; transition: transform 0.1s;
+    }
+   .jogwheel:active { cursor: grabbing; box-shadow: 0 0 50px rgba(59, 130, 246, 0.8); }
+   .jogwheel::after {
+      content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 40%;
+      background: #3b82f6; transform: translate(-50%, -100%); border-radius: 2px;
+    }
+   .bpm-display { text-align: center; font-family: monospace; font-size: 28px; color: #22c55e; margin: 10px 0; }
+   .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
+   .btn { background: #2a2a2a; border: 1px solid #3a3a3a; color: white; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+   .btn:hover { background: #3b82f6; border-color: #3b82f6; }
+   .btn.active { background: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); }
+   .btn-play { background: #22c55e; border-color: #22c55e; }
+   .btn-play:hover { background: #16a34a; }
+   .slider-group { margin: 12px 0; }
+   .slider-group label { display: block; font-size: 11px; color: #9ca3af; margin-bottom: 4px; display: flex; justify-content: space-between; }
+   .slider-group input[type="range"] { width: 100%; height: 6px; background: #2a2a2a; border-radius: 3px; outline: none; }
+   .slider-group input[type="range"]::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; background: #3b82f6; border-radius: 50%; cursor: pointer; }
+   .mixer { width: 120px; background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; }
+   .mixer h3 { margin-bottom: 20px; font-size: 14px; color: #3b82f6; }
+   .crossfader { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 200px; background: #2a2a2a; margin: 20px 0; }
+   .fx-panel { background: #1a1a1a; border: 2px solid #2a2a2a; border-radius: 12px; padding: 15px; margin: 20px; }
+   .fx-panel h3 { margin-bottom: 15px; color: #3b82f6; }
+   .fx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+   .eq-band { display: flex; flex-direction: column; align-items: center; }
+   .eq-band input[type="range"] { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 8px; height: 100px; }
+   .eq-band label { font-size: 11px; color: #9ca3af; margin-top: 8px; }
+    input[type="file"] { width: 100%; font-size: 11px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎧 DJ WEB PRO - BASS + REVERB + SLOW</h1>
+  </div>
+
+  <div class="dj-container">
+    <!-- DECK A -->
+    <div class="deck">
+      <h2>DECK A</h2>
+      <input type="file" id="fileA" accept="audio/*">
+      <div class="waveform"><canvas id="waveA"></canvas></div>
+      <div class="jogwheel" id="jogA"></div>
+      <div class="bpm-display" id="bpmA">--- BPM</div>
+
+      <div class="controls">
+        <button class="btn btn-play" id="playA">▶ PLAY</button>
+        <button class="btn" id="cueA">CUE</button>
+        <button class="btn" id="syncA">SYNC</button>
+        <button class="btn" id="loopA">LOOP</button>
+      </div>
+
+      <div class="slider-group">
+        <label>Tempo/Slow: <span id="tempoAVal">1.00x</span></label>
+        <input type="range" id="tempoA" min="0.5" max="1.5" step="0.01" value="1">
+      </div>
+      <div class="slider-group">
+        <label>Volume: <span id="volAVal">0dB</span></label>
+        <input type="range" id="volA" min="-60" max="6" value="0">
+      </div>
+    </div>
+
+    <!-- MIXER -->
+    <div class="mixer">
+      <h3>MIXER</h3>
+      <label style="font-size:11px; color:#9ca3af;">Crossfader</label>
+      <input type="range" id="crossfader" min="0" max="1" step="0.01" value="0.5" class="crossfader">
+      <div style="margin-top:auto; font-size:11px; text-align:center;">
+        <div>A</div>
+        <div>↑</div>
+        <div>B</div>
+      </div>
+    </div>
+
+    <!-- DECK B -->
+    <div class="deck">
+      <h2>DECK B</h2>
+      <input type="file" id="fileB" accept="audio/*">
+      <div class="waveform"><canvas id="waveB"></canvas></div>
+      <div class="jogwheel" id="jogB"></div>
+      <div class="bpm-display" id="bpmB">--- BPM</div>
+
+      <div class="controls">
+        <button class="btn btn-play" id="playB">▶ PLAY</button>
+        <button class="btn" id="cueB">CUE</button>
+        <button class="btn" id="syncB">SYNC</button>
+        <button class="btn" id="loopB">LOOP</button>
+      </div>
+
+      <div class="slider-group">
+        <label>Tempo/Slow: <span id="tempoBVal">1.00x</span></label>
+        <input type="range" id="tempoB" min="0.5" max="1.5" step="0.01" value="1">
+      </div>
+      <div class="slider-group">
+        <label>Volume: <span id="volBVal">0dB</span></label>
+        <input type="range" id="volB" min="-60" max="6" value="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- FX PANEL -->
+  <div class="fx-panel">
+    <h3>🔊 MASTER FX - BASS + REVERB + FILTER</h3>
+    <div class="fx-grid">
+      <!-- EQ 3 BAND -->
+      <div>
+        <h4 style="font-size:12px; margin-bottom:10px; color:#9ca3af;">EQ 3-BAND</h4>
+        <div style="display:flex; gap:15px; justify-content:center;">
+          <div class="eq-band">
+            <input type="range" id="bass" min="-20" max="20" value="0" orient="vertical">
+            <label>BASS</label>
+          </div>
+          <div class="eq-band">
+            <input type="range" id="mid" min="-20" max="20" value="0" orient="vertical">
+            <label>MID</label>
+          </div>
+          <div class="eq-band">
+            <input type="range" id="treble" min="-20" max="20" value="0" orient="vertical">
+            <label>TREBLE</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- REVERB -->
+      <div>
+        <h4 style="font-size:12px; margin-bottom:10px; color:#9ca3af;">REVERB</h4>
+        <div class="slider-group">
+          <label>Mix: <span id="reverbVal">0%</span></label>
+          <input type="range" id="reverb" min="0" max="1" step="0.01" value="0">
+        </div>
+        <div class="slider-group">
+          <label>Decay: <span id="decayVal">2s</span></label>
+          <input type="range" id="decay" min="0.1" max="10" step="0.1" value="2">
+        </div>
+      </div>
+
+      <!-- ECHO/DELAY -->
+      <div>
+        <h4 style="font-size:12px; margin-bottom:10px; color:#9ca3af;">ECHO/DELAY</h4>
+        <div class="slider-group">
+          <label>Mix: <span id="echoVal">0%</span></label>
+          <input type="range" id="echo" min="0" max="1" step="0.01" value="0">
+        </div>
+        <div class="slider-group">
+          <label>Time: <span id="echoTimeVal">0.25s</span></label>
+          <input type="range" id="echoTime" min="0.05" max="1" step="0.05" value="0.25">
+        </div>
+      </div>
+
+      <!-- FILTER -->
+      <div>
+        <h4 style="font-size:12px; margin-bottom:10px; color:#9ca3af;">FILTER</h4>
+        <div class="slider-group">
+          <label>Cutoff: <span id="filterVal">20kHz</span></label>
+          <input type="range" id="filter" min="20" max="20000" value="20000">
+        </div>
+        <div class="slider-group">
+          <label>Resonance: <span id="resVal">0</span></label>
+          <input type="range" id="resonance" min="0" max="20" value="0">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let deckA, deckB, crossFade, masterEQ, masterReverb, masterDelay, masterFilter;
+let bpmA = 120, bpmB = 120;
+
+// INIT
+async function init() {
+  await Tone.start();
+
+  // Master chain: Player > EQ > Filter > Reverb > Delay > Crossfade > Destination
+  masterEQ = new Tone.EQ3(0, 0, 0).toDestination();
+  masterFilter = new Tone.Filter(20000, "lowpass").connect(masterEQ);
+  masterReverb = new Tone.Reverb(2).connect(masterFilter);
+  masterDelay = new Tone.FeedbackDelay("8n", 0.5).connect(masterReverb);
+  crossFade = new Tone.CrossFade(0.5).connect(masterDelay);
+
+  masterReverb.wet.value = 0;
+  masterDelay.wet.value = 0;
+
+  deckA = new Tone.Player().connect(crossFade.a);
+  deckB = new Tone.Player().connect(crossFade.b);
+
+  drawEmptyWaveform('waveA');
+  drawEmptyWaveform('waveB');
+}
+
+// LOAD FILE
+document.getElementById('fileA').onchange = async e => {
+  if (!e.target.files[0]) return;
+  await deckA.load(URL.createObjectURL(e.target.files[0]));
+  drawWaveform('waveA', deckA.buffer);
+  bpmA = await detectBPM(deckA.buffer);
+  document.getElementById('bpmA').textContent = bpmA.toFixed(1) + ' BPM';
+};
+
+document.getElementById('fileB').onchange = async e => {
+  if (!e.target.files[0]) return;
+  await deckB.load(URL.createObjectURL(e.target.files[0]));
+  drawWaveform('waveB', deckB.buffer);
+  bpmB = await detectBPM(deckB.buffer);
+  document.getElementById('bpmB').textContent = bpmB.toFixed(1) + ' BPM';
+};
+
+// TRANSPORT
+document.getElementById('playA').onclick = () => {
+  if (deckA.state === 'started') { deckA.stop(); }
+  else { deckA.start(); }
+};
+document.getElementById('playB').onclick = () => {
+  if (deckB.state === 'started') { deckB.stop(); }
+  else { deckB.start(); }
+};
+document.getElementById('cueA').onclick = () => deckA.seek(0);
+document.getElementById('cueB').onclick = () => deckB.seek(0);
+
+// TEMPO/SLOW
+document.getElementById('tempoA').oninput = e => {
+  deckA.playbackRate = e.target.value;
+  document.getElementById('tempoAVal').textContent = e.target.value + 'x';
+};
+document.getElementById('tempoB').oninput = e => {
+  deckB.playbackRate = e.target.value;
+  document.getElementById('tempoBVal').textContent = e.target.value + 'x';
+};
+
+// VOLUME
+document.getElementById('volA').oninput = e => {
+  deckA.volume.value = e.target.value;
+  document.getElementById('volAVal').textContent = e.target.value + 'dB';
+};
+document.getElementById('volB').oninput = e => {
+  deckB.volume.value = e.target.value;
+  document.getElementById('volBVal').textContent = e.target.value + 'dB';
+};
+
+// CROSSFADER
+document.getElementById('crossfader').oninput = e => {
+  crossFade.fade.value = parseFloat(e.target.value);
+};
+
+// SYNC
+document.getElementById('syncA').onclick = () => {
+  const ratio = bpmB / bpmA;
+  deckA.playbackRate = ratio;
+  document.getElementById('tempoA').value = ratio;
+  document.getElementById('tempoAVal').textContent = ratio.toFixed(2) + 'x';
+};
+document.getElementById('syncB').onclick = () => {
+  const ratio = bpmA / bpmB;
+  deckB.playbackRate = ratio;
+  document.getElementById('tempoB').value = ratio;
+  document.getElementById('tempoBVal').textContent = ratio.toFixed(2) + 'x';
+};
+
+// EQ - BASS BOOST
+document.getElementById('bass').oninput = e => { masterEQ.low.value = e.target.value; };
+document.getElementById('mid').oninput = e => { masterEQ.mid.value = e.target.value; };
+document.getElementById('treble').oninput = e => { masterEQ.high.value = e.target.value; };
+
+// REVERB
+document.getElementById('reverb').oninput = e => {
+  masterReverb.wet.value = e.target.value;
+  document.getElementById('reverbVal').textContent = Math.round(e.target.value * 100) + '%';
+};
+document.getElementById('decay').oninput = e => {
+  masterReverb.decay = e.target.value;
+  document.getElementById('decayVal').textContent = e.target.value + 's';
+};
+
+// ECHO
+document.getElementById('echo').oninput = e => {
+  masterDelay.wet.value = e.target.value;
+  document.getElementById('echoVal').textContent = Math.round(e.target.value * 100) + '%';
+};
+document.getElementById('echoTime').oninput = e => {
+  masterDelay.delayTime.value = e.target.value;
+  document.getElementById('echoTimeVal').textContent = e.target.value + 's';
+};
+
+// FILTER
+document.getElementById('filter').oninput = e => {
+  masterFilter.frequency.value = e.target.value;
+  document.getElementById('filterVal').textContent = e.target.value >= 1000? (e.target.value/1000).toFixed(1) + 'kHz' : e.target.value + 'Hz';
+};
+document.getElementById('resonance').oninput = e => {
+  masterFilter.Q.value = e.target.value;
+  document.getElementById('resVal').textContent = e.target.value;
+};
+
+// JOGWHEEL SCRATCH
+['jogA', 'jogB'].forEach((id, idx) => {
+  const jog = document.getElementById(id);
+  const deck = idx === 0? deckA : deckB;
+  const tempoSlider = idx === 0? 'tempoA' : 'tempoB';
+  let isDragging = false;
+  let rotation = 0;
+
+  jog.onmousedown = () => isDragging = true;
+  document.onmouseup = () => { isDragging = false; };
+  document.onmousemove = e => {
+    if (isDragging && deck.loaded) {
+      rotation += e.movementX;
+      jog.style.transform = `rotate(${rotation}deg)`;
+      const currentRate = parseFloat(document.getElementById(tempoSlider).value);
+      deck.playbackRate = currentRate + (e.movementX * 0.01);
+      setTimeout(() => deck.playbackRate = currentRate, 100);
+    }
+  };
+});
+
+// BPM DETECT
+async function detectBPM(buffer) {
+  const data = buffer.getChannelData(0);
+  const peaks = [];
+  const threshold = 0.9;
+  for(let i = 0; i < data.length; i++) {
+    if(data[i] > threshold) {
+      peaks.push(i);
+      i += 10000; // skip
+    }
+  }
+  if(peaks.length < 2) return 120;
+  const intervals = [];
+  for(let i = 1; i < peaks.length; i++) intervals.push(peaks[i] - peaks[i-1]);
+  const avg = intervals.reduce((a,b) => a+b, 0) / intervals.length;
+  return 60 / (avg / buffer.sampleRate);
+}
+
+// WAVEFORM
+function drawEmptyWaveform(id) {
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawWaveform(id, buffer) {
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  const data = buffer.getChannelData(0);
+  const step = Math.ceil(data.length / canvas.width);
+  const amp = canvas.height / 2;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.strokeStyle = '#3b82f6';
+  ctx.lineWidth = 2;
+
+  for(let i = 0; i < canvas.width; i++) {
+    let min = 1.0, max = -1.0;
+    for(let j = 0; j < step; j++) {
+      const datum = data[i * step + j];
+      if(datum < min) min = datum;
+      if(datum > max) max = datum;
+    }
+    ctx.moveTo(i, (1 + min) * amp);
+    ctx.lineTo(i, (1 + max) * amp);
+  }
+  ctx.stroke();
+}
+
+init();
+</script>
+</body>
+  </html>
