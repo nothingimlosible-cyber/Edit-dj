@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DJ PRO - SIMPLE + LENGKAP</title>
+  <title>DJ PRO - FIX TOTAL</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:system-ui;padding:12px}.header{text-align:center;padding:12px;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:10px;margin-bottom:12px;border:1px solid #3b82f6}.header h1{font-size:18px;text-shadow:0 0 10px #3b82f6}.status{background:#ef4444;padding:10px;text-align:center;border-radius:8px;font-weight:700;margin-bottom:12px;font-size:14px}.status.ready{background:#22c55e}.deck{background:#1a1a1a;padding:15px;border-radius:12px;margin-bottom:12px;border:2px solid #2a2a2a}.deck h2{color:#3b82f6;text-align:center;margin-bottom:10px;font-size:16px}.track-info{font-size:11px;color:#22c55e;text-align:center;margin:6px 0;min-height:15px}audio{width:100%;margin:8px 0;height:40px;border-radius:8px}.waveform{width:100%;height:60px;background:#0a0a0a;border-radius:6px;margin:8px 0;position:relative;overflow:hidden;cursor:pointer}#waveCanvas{width:100%;height:100%}.time-display{text-align:center;font-family:monospace;font-size:12px;color:#9ca3af;margin:4px 0}.jogwheel{width:140px;height:140px;margin:12px auto;border-radius:50%;background:radial-gradient(circle,#2a2a2a 0%,#0a0a0a 70%);border:3px solid #3b82f6;box-shadow:0 0 20px rgba(59,130,246,0.4);cursor:grab;position:relative;touch-action:none}.jogwheel::after{content:'';position:absolute;top:50%;left:50%;width:3px;height:40%;background:#3b82f6;transform:translate(-50%,-100%);border-radius:2px}.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0}.btn{background:#2a2a2a;border:1px solid #3a3a3a;color:white;padding:10px;border-radius:6px;cursor:pointer;font-weight:600;font-size:11px;user-select:none}.btn:active{transform:scale(0.95)}.btn-play{background:#22c55e;border-color:#22c55e}.btn-play.pause{background:#f59e0b}.btn-cue{background:#3b82f6}.btn-loop{background:#2a2a2a}.btn-loop.active{background:#f59e0b}.btn-jedag{background:#ef4444}.slider-box{margin:10px 0}.slider-box label{display:flex;justify-content:space-between;font-size:10px;color:#9ca3af;margin-bottom:3px}.slider-box input{width:100%;height:5px}.fx-panel{background:#1a1a1a;border:2px solid #2a2a2a;border-radius:12px;padding:12px;margin:12px 0}.fx-panel h3{margin-bottom:10px;color:#3b82f6;text-align:center;font-size:14px}.fx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fx-box{background:#0a0a0a;padding:10px;border-radius:6px}.fx-box h4{font-size:10px;margin-bottom:8px;color:#9ca3af;text-align:center}.eq-container{display:flex;gap:8px;justify-content:center}.eq-band{display:flex;flex-direction:column;align-items:center}.eq-band input{writing-mode:bt-lr;-webkit-appearance:slider-vertical;width:6px;height:80px}.eq-band label{font-size:8px;color:#9ca3af;margin-top:4px}input[type="file"]{width:100%;font-size:10px;margin-bottom:6px;color:#9ca3af}.rec-btn{width:100%;background:#ef4444;border:none;color:white;padding:12px;border-radius:8px;font-weight:700;margin-top:10px;font-size:14px}.rec-btn.recording{background:#22c55e;animation:pulse 1s infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
   </style>
 </head>
 <body>
-  <div class="header"><h1>🎧 DJ PRO - BUNYI + LENGKAP</h1></div>
+  <div class="header"><h1>🎧 DJ PRO - UDAH FIX TOTAL</h1></div>
   <div class="status" id="status">Pilih file MP3 dulu</div>
 
   <div class="deck">
@@ -40,7 +40,7 @@
   </div>
 
   <div class="fx-panel">
-    <h3>🔊 MASTER FX</h3>
+    <h3>🔊 MASTER FX - UDAH BISA SEMUA</h3>
     <div class="fx-grid">
       <div class="fx-box">
         <h4>EQ 3-BAND</h4>
@@ -73,19 +73,17 @@
 <script>
 let audioA = document.getElementById('audioA');
 let audioCtx, source, bassEQ, midEQ, trebleEQ, filter, reverb, echo, gainNode, analyser;
+let reverbGain, echoGain; // INI YANG BIKIN REVERB ECHO JALAN
 let cuePoint = 0, isLooping = false, loopStart = 0, loopEnd = 0;
 let recorder, chunks = [], animationId;
 
-// FILE LOAD
 document.getElementById('fileA').onchange = async (e) => {
   const file = e.target.files[0];
   if (!file) return;
-  
   document.getElementById('status').textContent = '⏳ Loading...';
   const url = URL.createObjectURL(file);
   audioA.src = url;
   document.getElementById('infoA').textContent = file.name;
-  
   audioA.onloadedmetadata = () => {
     document.getElementById('durTime').textContent = fmtTime(audioA.duration);
     document.getElementById('status').textContent = '✅ READY! Klik PLAY';
@@ -93,67 +91,44 @@ document.getElementById('fileA').onchange = async (e) => {
     setupAudio();
     drawWaveform();
   };
-  
   audioA.onerror = () => {
     document.getElementById('status').textContent = '❌ File error! Coba MP3 lain';
     alert('File rusak/bukan MP3. Download dari Y2mate format MP3 ya');
   };
 };
 
-// AUDIO CONTEXT + FX CHAIN
 function setupAudio() {
   if (audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   source = audioCtx.createMediaElementSource(audioA);
   
-  // EQ 3-Band
-  bassEQ = audioCtx.createBiquadFilter();
-  bassEQ.type = 'lowshelf';
-  bassEQ.frequency.value = 200;
-  midEQ = audioCtx.createBiquadFilter();
-  midEQ.type = 'peaking';
-  midEQ.frequency.value = 1000;
-  midEQ.Q.value = 1;
-  trebleEQ = audioCtx.createBiquadFilter();
-  trebleEQ.type = 'highshelf';
-  trebleEQ.frequency.value = 3000;
+  bassEQ = audioCtx.createBiquadFilter(); bassEQ.type = 'lowshelf'; bassEQ.frequency.value = 200;
+  midEQ = audioCtx.createBiquadFilter(); midEQ.type = 'peaking'; midEQ.frequency.value = 1000; midEQ.Q.value = 1;
+  trebleEQ = audioCtx.createBiquadFilter(); trebleEQ.type = 'highshelf'; trebleEQ.frequency.value = 3000;
   
-  // Filter
-  filter = audioCtx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 20000;
+  filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 20000;
   
-  // Echo
-  echo = audioCtx.createDelay(1.0);
-  echo.delayTime.value = 0.3;
-  const echoGain = audioCtx.createGain();
-  echoGain.gain.value = 0;
-  echo.connect(echoGain).connect(echo);
+  echo = audioCtx.createDelay(1.0); echo.delayTime.value = 0.3;
+  echoGain = audioCtx.createGain(); echoGain.gain.value = 0;
+  echo.connect(echoGain); echoGain.connect(echo);
   
-  // Reverb
   reverb = audioCtx.createConvolver();
-  const reverbGain = audioCtx.createGain();
-  reverbGain.gain.value = 0;
+  reverbGain = audioCtx.createGain(); reverbGain.gain.value = 0;
   createReverb(2);
   
-  // Analyser buat waveform
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256;
-  
+  analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
   gainNode = audioCtx.createGain();
   
-  // Chain: source → bass → mid → treble → filter → echo → reverb → gain → destination
   source.connect(bassEQ).connect(midEQ).connect(trebleEQ).connect(filter);
+  filter.connect(gainNode);
   filter.connect(echo);
   filter.connect(reverbGain);
-  reverbGain.connect(reverb);
-  filter.connect(gainNode);
   echoGain.connect(gainNode);
+  reverbGain.connect(reverb);
   reverb.connect(gainNode);
   gainNode.connect(analyser).connect(audioCtx.destination);
 }
 
-// REVERB IMPULSE
 function createReverb(seconds) {
   const rate = audioCtx.sampleRate;
   const length = rate * seconds;
@@ -167,7 +142,6 @@ function createReverb(seconds) {
   reverb.buffer = impulse;
 }
 
-// PLAY/PAUSE
 document.getElementById('playA').onclick = () => {
   if (audioA.paused) {
     audioA.play();
@@ -180,7 +154,6 @@ document.getElementById('playA').onclick = () => {
   }
 };
 
-// CUE - Tahan buat play dari cue point
 const cueBtn = document.getElementById('cueA');
 cueBtn.onmousedown = () => {
   audioA.currentTime = cuePoint;
@@ -198,13 +171,12 @@ cueBtn.oncontextmenu = (e) => {
   setTimeout(() => cueBtn.textContent = 'CUE', 800);
 };
 
-// LOOP 4 BAR
 document.getElementById('loopA').onclick = () => {
   isLooping =!isLooping;
   const btn = document.getElementById('loopA');
   if (isLooping) {
     loopStart = audioA.currentTime;
-    loopEnd = loopStart + 8; // 8 detik = ~4 bar
+    loopEnd = loopStart + 8;
     btn.classList.add('active');
     btn.textContent = 'LOOP ON';
   } else {
@@ -213,13 +185,11 @@ document.getElementById('loopA').onclick = () => {
   }
 };
 
-// TEMPO
 document.getElementById('speedA').oninput = (e) => {
   audioA.playbackRate = parseFloat(e.target.value);
   document.getElementById('speedAVal').textContent = parseFloat(e.target.value).toFixed(2) + 'x';
 };
 
-// EQ
 document.getElementById('bass').oninput = (e) => {
   if (bassEQ) bassEQ.gain.value = parseFloat(e.target.value);
 };
@@ -230,7 +200,6 @@ document.getElementById('treble').oninput = (e) => {
   if (trebleEQ) trebleEQ.gain.value = parseFloat(e.target.value);
 };
 
-// FILTER
 document.getElementById('filter').oninput = (e) => {
   if (filter) filter.frequency.value = parseFloat(e.target.value);
   const v = parseFloat(e.target.value);
@@ -241,27 +210,26 @@ document.getElementById('resonance').oninput = (e) => {
   document.getElementById('resVal').textContent = e.target.value;
 };
 
-// REVERB
 document.getElementById('reverb').oninput = (e) => {
-  if (reverb) reverbGain.gain.value = parseFloat(e.target.value) / 100;
-  document.getElementById('reverbVal').textContent = e.target.value + '%';
+  const val = parseFloat(e.target.value);
+  if (reverbGain) reverbGain.gain.value = val / 100;
+  document.getElementById('reverbVal').textContent = val + '%';
 };
 document.getElementById('size').oninput = (e) => {
   createReverb(parseFloat(e.target.value));
   document.getElementById('sizeVal').textContent = e.target.value + 's';
 };
 
-// ECHO
 document.getElementById('echo').oninput = (e) => {
-  if (echo) echoGain.gain.value = parseFloat(e.target.value) / 100;
-  document.getElementById('echoVal').textContent = e.target.value + '%';
+  const val = parseFloat(e.target.value);
+  if (echoGain) echoGain.gain.value = val / 100;
+  document.getElementById('echoVal').textContent = val + '%';
 };
 document.getElementById('echoTime').oninput = (e) => {
   if (echo) echo.delayTime.value = parseFloat(e.target.value);
   document.getElementById('echoTimeVal').textContent = e.target.value + 's';
 };
 
-// PRESET
 document.getElementById('jedagA').onclick = () => {
   document.getElementById('speedA').value = 0.85;
   document.getElementById('speedA').dispatchEvent(new Event('input'));
@@ -295,7 +263,6 @@ document.getElementById('lofiA').onclick = () => {
   document.getElementById('treble').dispatchEvent(new Event('input'));
 };
 
-// JOGWHEEL
 let isDragging = false, rotation = 0;
 const jog = document.getElementById('jogA');
 jog.onmousedown = jog.ontouchstart = () => { isDragging = true; };
@@ -312,13 +279,11 @@ document.onmousemove = document.ontouchmove = (e) => {
   }, 100);
 };
 
-// WAVEFORM
 function drawWaveform() {
   const canvas = document.getElementById('waveCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
-  
   function draw() {
     animationId = requestAnimationFrame(draw);
     if (!analyser) return;
@@ -343,7 +308,6 @@ function drawWaveform() {
   draw();
 }
 
-// CLICK WAVEFORM TO SEEK
 document.getElementById('waveform').onclick = (e) => {
   const rect = e.target.getBoundingClientRect();
   const x = e.clientX - rect.left;
@@ -351,11 +315,9 @@ document.getElementById('waveform').onclick = (e) => {
   audioA.currentTime = audioA.duration * percent;
 };
 
-// TIMER UPDATE
 setInterval(() => {
   if (!audioA.paused) {
     document.getElementById('curTime').textContent = fmtTime(audioA.currentTime);
-    // LOOP CHECK
     if (isLooping && audioA.currentTime >= loopEnd) {
       audioA.currentTime = loopStart;
     }
@@ -367,7 +329,6 @@ audioA.onended = () => {
   document.getElementById('playA').classList.remove('pause');
 };
 
-// REC
 document.getElementById('recBtn').onclick = async () => {
   if (!audioCtx) {
     alert('Play lagu dulu baru REC!');
