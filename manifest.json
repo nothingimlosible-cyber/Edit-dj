@@ -1,7 +1,7 @@
 {
   "short_name": "DJ PRO",
   "name": "DJ PRO V3 JEDAG JEDUG",
-  "description": "App DJ Jedag Jedug fitur lengkap: Pitch, Tempo, EQ 5 Band, FX Pad, Record. Bikin remix dari HP aja!",
+  "description": "App DJ Jedag Jedug fitur lengkap: Pitch, Tempo, EQ 5 Band, FX Pad, Record",
   "icons": [
     {
       "src": "icon-192.png",
@@ -11,14 +11,13 @@
     },
     {
       "src": "icon-512.png",
-      "sizes": "512x512", 
-      "type": "image/png",
+      "sizes": "512x512",
+      "type": "image/png", 
       "purpose": "any maskable"
     }
   ],
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#ff0080",
-  "background_color": "#0a0a0a",
-  "orientation": "portrait"
+  "background_color": "#0a0a0a"
 }
