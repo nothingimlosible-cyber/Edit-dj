@@ -11,28 +11,28 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; padding: 12px; padding-bottom: 80px!important; overflow-x: hidden; }
- .container { max-width: 500px; margin: 0 auto; }
+.container { max-width: 500px; margin: 0 auto; }
         h1 { text-align: center; color: #ff0080; text-shadow: 0 0 15px #ff0080; margin-bottom: 12px; font-size: 22px; }
- .upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
-     .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
+.upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
+    .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
         audio { width: 100%; height: 32px; }
- .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
- .controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
+.visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
+.controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
         button { padding: 8px 4px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; font-weight: bold; font-size: 10px; cursor: pointer; transition: all 0.1s; }
         button:active { transform: scale(0.9); }
- .fx-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
- .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 9px; }
- .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
- .effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
- .slider-group { margin-bottom: 10px; }
+.fx-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
+.fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 9px; }
+.effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
+.effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
+.slider-group { margin-bottom: 10px; }
         label { display: block; margin-bottom: 3px; font-size: 11px; color: #ccc; }
         input[type="range"] { width: 100%; height: 4px; background: #2a2a2a; border-radius: 5px; outline: none; -webkit-appearance: none; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ff0080; border-radius: 50%; cursor: pointer; }
- .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
- .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
- .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
+.eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
+.eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
+.jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
         @keyframes jedag { 0%, 100% { box-shadow: 0 0 15px #ff0000; } 50% { box-shadow: 0 0 30px #ff8800; } }
- .active { background: #00ff88!important; color: #000!important; }
+.active { background: #00ff88!important; color: #000!important; }
    #infinixWarn { display:none; background:#ff8800; color:#000; padding:10px; text-align:center; font-weight:bold; margin-bottom:10px; border-radius:6px; }
     </style>
 </head>
@@ -109,15 +109,6 @@
         const canvas = document.getElementById('visualizer');
         const ctx2d = canvas.getContext('2d');
 
-        // FX SOUNDS TANEM LANGSUNG - DIJAMIN BUNYI DI APK
-        const fxBuffers = {};
-        const fxData = {
-            airhorn: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=',
-            siren: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=',
-            scratch: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=',
-            buildup: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='
-        };
-
         async function initAudioContext() {
             if (!ctx) {
                 ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -136,11 +127,6 @@
                 src.connect(eq60).connect(eq250).connect(eq1k).connect(eq4k).connect(eq12k).connect(lowpass).connect(highpass).connect(delay).connect(distortionNode).connect(gain).connect(analyser).connect(ctx.destination);
                 analyser.fftSize = 256;
                 visual();
-                for (const fx in fxData) {
-                    const res = await fetch(fxData[fx]);
-                    const buf = await res.arrayBuffer();
-                    fxBuffers[fx] = await ctx.decodeAudioData(buf);
-                }
             }
             if (ctx.state === 'suspended') await ctx.resume();
         }
@@ -162,12 +148,10 @@
         document.getElementById('pauseBtn').onclick = () => player.pause();
         document.getElementById('stopBtn').onclick = () => { player.pause(); player.currentTime = 0; };
 
-        // CUE ASLI KAYAK CDJ
         document.getElementById('cueBtn').onclick = async function() {
             await initAudioContext();
             if (player.paused && cuePoint > 0) {
-                player.currentTime = cuePoint;
-                player.play();
+                player.currentTime = cuePoint; player.play();
                 this.classList.add('active'); setTimeout(() => this.classList.remove('active'), 200);
             } else {
                 cuePoint = player.currentTime;
@@ -177,46 +161,79 @@
 
         document.getElementById('loopBtn').onclick = function() { player.loop =!player.loop; this.classList.toggle('active'); };
         document.getElementById('flashBtn').onclick = function() { isFlash =!isFlash; this.classList.toggle('active'); };
+
         document.getElementById('jedagBtn').onclick = function() {
             this.classList.toggle('jedag-mode');
             if (this.classList.contains('jedag-mode')) {
-                document.getElementById('eq60').value = 15; document.getElementById('eq250').value = 8;
-                document.getElementById('reverb').value = 0.7; document.getElementById('pitch').value = 0.85;
-                document.getElementById('lowpass').value = 8000; update();
+                document.getElementById('eq60').value = 18;
+                document.getElementById('eq250').value = 10;
+                document.getElementById('pitch').value = 0.85;
+                document.getElementById('lowpass').value = 8000;
+                document.getElementById('distortion').value = 0.3;
+                update();
             } else {
-                document.getElementById('eq60').value = 0; document.getElementById('eq250').value = 0;
-                document.getElementById('reverb').value = 0; document.getElementById('pitch').value = 1;
-                document.getElementById('lowpass').value = 20000; update();
+                document.getElementById('eq60').value = 0;
+                document.getElementById('eq250').value = 0;
+                document.getElementById('pitch').value = 1;
+                document.getElementById('lowpass').value = 20000;
+                document.getElementById('distortion').value = 0;
+                update();
             }
         };
 
-        // FX PAD ASLI - BUKAN PAJANGAN
+        // FX 100% PURE KODE - DIJAMIN BUNYI DI INFINIX
+        function playFX(type) {
+            const osc = ctx.createOscillator();
+            const fxGain = ctx.createGain();
+            osc.connect(fxGain).connect(ctx.destination);
+            fxGain.gain.setValueAtTime(0.3, ctx.currentTime);
+
+            if (type === 'airhorn') {
+                osc.type = 'square'; osc.frequency.setValueAtTime(300, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.1);
+                fxGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+                osc.start(); osc.stop(ctx.currentTime + 0.5);
+            }
+            if (type === 'siren') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.5);
+                osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 1);
+                fxGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1);
+                osc.start(); osc.stop(ctx.currentTime + 1);
+            }
+            if (type === 'scratch') {
+                const noise = ctx.createBufferSource();
+                const bufferSize = ctx.sampleRate * 0.2;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const output = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+                noise.buffer = buffer; noise.connect(fxGain); fxGain.gain.setValueAtTime(0.2, ctx.currentTime);
+                noise.start(); noise.stop(ctx.currentTime + 0.2);
+                if(!player.paused) {
+                    const t = player.currentTime;
+                    player.currentTime = Math.max(0, t - 0.3);
+                    setTimeout(() => player.currentTime = t + 0.3, 150);
+                }
+            }
+            if (type === 'buildup') {
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(2000, ctx.currentTime + 2);
+                fxGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2);
+                osc.start(); osc.stop(ctx.currentTime + 2);
+                let p = 1.0, ot = document.getElementById('tempo').value, ol = document.getElementById('lowpass').value;
+                const intv = setInterval(() => {
+                    p += 0.05; player.playbackRate = p; lowpass.frequency.value = 20000 - (p * 3000);
+                    if(p >= 1.5) clearInterval(intv);
+                }, 100);
+                setTimeout(() => { player.playbackRate = ot; lowpass.frequency.value = ol; }, 3000);
+            }
+        }
+
         document.querySelectorAll('.fx-btn').forEach(btn => {
             btn.onclick = async () => {
                 await initAudioContext();
-                if (fxBuffers[btn.dataset.fx]) {
-                    const source = ctx.createBufferSource();
-                    source.buffer = fxBuffers[btn.dataset.fx];
-                    source.connect(ctx.destination);
-                    source.start(0);
-                    btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 300);
-
-                    // SCRATCH NGARUH KE LAGU
-                    if(btn.dataset.fx === 'scratch' &&!player.paused) {
-                        const t = player.currentTime;
-                        player.currentTime = Math.max(0, t - 0.3);
-                        setTimeout(() => player.currentTime = t + 0.3, 150);
-                    }
-                    // BUILDUP NGARUH KE LAGU
-                    if(btn.dataset.fx === 'buildup') {
-                        let p = 1.0, ot = document.getElementById('tempo').value, ol = document.getElementById('lowpass').value;
-                        const intv = setInterval(() => {
-                            p += 0.05; player.playbackRate = p; lowpass.frequency.value = 20000 - (p * 3000);
-                            if(p >= 1.5) clearInterval(intv);
-                        }, 100);
-                        setTimeout(() => { player.playbackRate = ot; lowpass.frequency.value = ol; }, 3000);
-                    }
-                }
+                playFX(btn.dataset.fx);
+                btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 300);
             };
         });
 
