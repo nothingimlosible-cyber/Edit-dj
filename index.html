@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DJ PRO V3 ULTIMATE</title>
 
-    <!-- 🔥 INI 5 BARIS WAJIB PWA - UDAH AKU TAMBAHIN 🔥 -->
+    <!-- 🔥 PWA WAJIB - JANGAN DIHAPUS KALO DEPLOY MEDIAN 🔥 -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff0080">
     <link rel="icon" type="image/png" href="icon-192.png">
@@ -23,7 +23,7 @@
             padding-bottom: 80px!important;
             overflow-x: hidden;
         }
-    .container { max-width: 500px; margin: 0 auto; }
+   .container { max-width: 500px; margin: 0 auto; }
         h1 {
             text-align: center;
             color: #ff0080;
@@ -31,25 +31,26 @@
             margin-bottom: 12px;
             font-size: 22px;
         }
-    .upload-section {
+   .upload-section {
             background: #1a1a1a;
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 12px;
             border: 1px solid #ff0080;
         }
-        input[type="file"] {
+       .file-btn {
             width: 100%;
-            padding: 6px;
-            background: #2a2a2a;
-            border: 1px solid #ff0080;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff0080, #7928ca);
+            border: none;
             border-radius: 6px;
             color: #fff;
             margin-bottom: 8px;
-            font-size: 11px;
+            font-size: 14px;
+            font-weight: bold;
         }
         audio { width: 100%; height: 32px; }
-    .visualizer {
+   .visualizer {
             width: 100%;
             height: 70px;
             background: #000;
@@ -57,7 +58,7 @@
             margin: 8px 0;
             border: 1px solid #ff0080;
         }
-    .controls {
+   .controls {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 6px;
@@ -74,31 +75,31 @@
             cursor: pointer;
         }
         button:active { transform: scale(0.9); }
-    .fx-pad {
+   .fx-pad {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 6px;
             margin-bottom: 12px;
         }
-    .fx-btn {
+   .fx-btn {
             background: linear-gradient(45deg, #ff8800, #ff0080)!important;
             height: 45px;
             font-size: 9px;
         }
-    .effect-section {
+   .effect-section {
             background: #1a1a1a;
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 10px;
             border: 1px solid #333;
         }
-    .effect-title {
+   .effect-title {
             color: #ff0080;
             margin-bottom: 6px;
             font-size: 13px;
             font-weight: bold;
         }
-    .slider-group { margin-bottom: 10px; }
+   .slider-group { margin-bottom: 10px; }
         label {
             display: block;
             margin-bottom: 3px;
@@ -121,19 +122,19 @@
             border-radius: 50%;
             cursor: pointer;
         }
-    .eq-grid {
+   .eq-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 8px;
             text-align: center;
         }
-    .eq-slider { height: 80px!important; writing-mode: bt-lr; -webkit-appearance: slider-vertical; }
-    .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
+   .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
+   .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
         @keyframes jedag {
             0%, 100% { box-shadow: 0 0 15px #ff0000; }
             50% { box-shadow: 0 0 30px #ff8800; }
         }
-    .active { background: #00ff88!important; color: #000!important; }
+   .active { background: #00ff88!important; color: #000!important; }
     </style>
 </head>
 <body>
@@ -141,12 +142,12 @@
         <h1>🎧 DJ PRO V3 ULTIMATE 🎧</h1>
 
         <div class="upload-section">
-            <input type="file" id="audioFile" accept="audio/*">
+            <input type="file" id="audioFile" accept="audio/*" hidden>
+            <button class="file-btn" onclick="document.getElementById('audioFile').click()">📁 PILIH LAGU MP3</button>
             <audio id="audioPlayer" controls></audio>
             <canvas id="visualizer" class="visualizer"></canvas>
         </div>
 
-        <!-- CONTROLS LENGKAP -->
         <div class="controls">
             <button id="playBtn">▶️</button>
             <button id="pauseBtn">⏸️</button>
@@ -158,7 +159,6 @@
             <button id="flashBtn">⚡FLASH</button>
         </div>
 
-        <!-- FX PAD DJ -->
         <div class="fx-pad">
             <button class="fx-btn" data-fx="airhorn">📢 AIRHORN</button>
             <button class="fx-btn" data-fx="siren">🚨 SIREN</button>
@@ -166,7 +166,6 @@
             <button class="fx-btn" data-fx="buildup">📈 BUILDUP</button>
         </div>
 
-        <!-- PITCH TEMPO -->
         <div class="effect-section">
             <div class="effect-title">⚡ PITCH & TEMPO</div>
             <div class="slider-group">
@@ -179,7 +178,6 @@
             </div>
         </div>
 
-        <!-- EQ 5 BAND -->
         <div class="effect-section">
             <div class="effect-title">🎚️ EQ 5-BAND</div>
             <div class="eq-grid">
@@ -191,7 +189,6 @@
             </div>
         </div>
 
-        <!-- EFFECTS -->
         <div class="effect-section">
             <div class="effect-title">🌊 EFFECTS</div>
             <div class="slider-group">
@@ -199,7 +196,7 @@
                 <input type="range" id="reverb" min="0" max="1" step="0.01" value="0">
             </div>
             <div class="slider-group">
-                <label>Echo: <span id="echoVal">0</span>ms</label>
+                <label>Echo: <span id="echoVal">0</span></label>
                 <input type="range" id="echo" min="0" max="1" step="0.01" value="0">
             </div>
             <div class="slider-group">
@@ -212,7 +209,6 @@
             </div>
         </div>
 
-        <!-- FILTER -->
         <div class="effect-section">
             <div class="effect-title">🔊 FILTER</div>
             <div class="slider-group">
@@ -226,7 +222,6 @@
         </div>
     </div>
 
-    <!-- BANNER ADMOB -->
     <div style="position:fixed; bottom:0; left:0; width:100%; text-align:center; background:#0a0a0a; padding:4px 0; z-index:9999; border-top:1px solid #ff0080;">
         <ins class="adsbygoogle"
              style="display:inline-block;width:320px;height:50px"
@@ -238,8 +233,8 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
 
-        // DJ ENGINE V3 - ULTIMATE
-        let ctx, src, gain, analyser, convolver, delay, flanger, distortion;
+        // DJ ENGINE V3 - FIXED FOR APK TWA
+        let ctx, src, gain, analyser, convolver, delay, flanger, distortionNode;
         let eq60, eq250, eq1k, eq4k, eq12k, lowpass, highpass;
         let mediaRec, chunks = [];
         let cuePoint = 0, isFlash = false;
@@ -248,52 +243,68 @@
         const canvas = document.getElementById('visualizer');
         const ctx2d = canvas.getContext('2d');
 
-        // FX SOUNDS
-        const fxSounds = {
+        // FX SOUNDS - pake base64 biar gak bentrok CORS di APK
+        const fxBuffers = {};
+        const fxUrls = {
             airhorn: 'https://www.soundjay.com/button/sounds/beep-07.mp3',
             siren: 'https://www.soundjay.com/button/sounds/beep-08b.mp3',
             scratch: 'https://www.soundjay.com/button/sounds/beep-09.mp3',
             buildup: 'https://www.soundjay.com/button/sounds/beep-10.mp3'
         };
 
-        function init() {
+        async function initAudioContext() {
             if (!ctx) {
                 ctx = new (window.AudioContext || window.webkitAudioContext)();
                 src = ctx.createMediaElementSource(player);
 
                 // EQ Chain
                 eq60 = ctx.createBiquadFilter(); eq60.type = 'lowshelf'; eq60.frequency.value = 60;
-                eq250 = ctx.createBiquadFilter(); eq250.type = 'peaking'; eq250.frequency.value = 250;
-                eq1k = ctx.createBiquadFilter(); eq1k.type = 'peaking'; eq1k.frequency.value = 1000;
-                eq4k = ctx.createBiquadFilter(); eq4k.type = 'peaking'; eq4k.frequency.value = 4000;
+                eq250 = ctx.createBiquadFilter(); eq250.type = 'peaking'; eq250.frequency.value = 250; eq250.Q.value = 1;
+                eq1k = ctx.createBiquadFilter(); eq1k.type = 'peaking'; eq1k.frequency.value = 1000; eq1k.Q.value = 1;
+                eq4k = ctx.createBiquadFilter(); eq4k.type = 'peaking'; eq4k.frequency.value = 4000; eq4k.Q.value = 1;
                 eq12k = ctx.createBiquadFilter(); eq12k.type = 'highshelf'; eq12k.frequency.value = 12000;
 
                 // Filters
-                lowpass = ctx.createBiquadFilter(); lowpass.type = 'lowpass';
-                highpass = ctx.createBiquadFilter(); highpass.type = 'highpass';
+                lowpass = ctx.createBiquadFilter(); lowpass.type = 'lowpass'; lowpass.frequency.value = 20000;
+                highpass = ctx.createBiquadFilter(); highpass.type = 'highpass'; highpass.frequency.value = 20;
 
                 // Effects
-                delay = ctx.createDelay(1.0);
+                delay = ctx.createDelay(1.0); delay.delayTime.value = 0;
+                convolver = ctx.createConvolver(); // Reverb
+                distortionNode = ctx.createWaveShaper();
+                flanger = ctx.createDelay(0.02);
+                
                 gain = ctx.createGain();
                 analyser = ctx.createAnalyser();
 
-                // Connect Chain
+                // Connect Chain: src -> EQ -> Filter -> Effects -> Gain -> Analyser -> Destination
                 src.connect(eq60).connect(eq250).connect(eq1k).connect(eq4k).connect(eq12k)
-                 .connect(lowpass).connect(highpass).connect(delay).connect(gain)
-                 .connect(analyser).connect(ctx.destination);
+                .connect(lowpass).connect(highpass).connect(delay).connect(gain)
+                .connect(analyser).connect(ctx.destination);
 
                 analyser.fftSize = 256;
                 visual();
             }
+            // FIX WAJIB: Resume context kalo ke-suspend di Android
+            if (ctx.state === 'suspended') await ctx.resume();
         }
 
+        // FIX 00:00: PAKE FILEREADER, BUKAN createObjectURL
         document.getElementById('audioFile').onchange = e => {
             const f = e.target.files[0];
-            if (f) { player.src = URL.createObjectURL(f); init(); }
+            if (f) {
+                const reader = new FileReader();
+                reader.onload = async evt => {
+                    player.src = evt.target.result; // base64 aman buat TWA
+                    await initAudioContext();
+                    player.load();
+                };
+                reader.readAsDataURL(f); // INI KUNCINYA
+            }
         };
 
         // Controls
-        document.getElementById('playBtn').onclick = () => { init(); player.play(); };
+        document.getElementById('playBtn').onclick = async () => { await initAudioContext(); player.play(); };
         document.getElementById('pauseBtn').onclick = () => player.pause();
         document.getElementById('stopBtn').onclick = () => { player.pause(); player.currentTime = 0; };
         document.getElementById('cueBtn').onclick = () => { cuePoint = player.currentTime; };
@@ -309,13 +320,15 @@
         document.getElementById('jedagBtn').onclick = function() {
             this.classList.toggle('jedag-mode');
             if (this.classList.contains('jedag-mode')) {
-                eq60.gain.value = 15; eq250.gain.value = 8;
+                document.getElementById('eq60').value = 15; 
+                document.getElementById('eq250').value = 8;
                 document.getElementById('reverb').value = 0.7;
                 document.getElementById('pitch').value = 0.85;
                 document.getElementById('lowpass').value = 8000;
                 update();
             } else {
-                eq60.gain.value = 0; eq250.gain.value = 0;
+                document.getElementById('eq60').value = 0; 
+                document.getElementById('eq250').value = 0;
                 document.getElementById('reverb').value = 0;
                 document.getElementById('pitch').value = 1;
                 document.getElementById('lowpass').value = 20000;
@@ -323,25 +336,34 @@
             }
         };
 
-        // FX Pad
+        // FX Pad - FIX: Pake AudioContext biar gak bentrok
         document.querySelectorAll('.fx-btn').forEach(btn => {
-            btn.onclick = () => {
-                const audio = new Audio(fxSounds[btn.dataset.fx]);
-                audio.volume = 0.8;
-                audio.play();
+            btn.onclick = async () => {
+                await initAudioContext();
+                if (!fxBuffers[btn.dataset.fx]) {
+                    const response = await fetch(fxUrls[btn.dataset.fx]);
+                    const arrayBuffer = await response.arrayBuffer();
+                    fxBuffers[btn.dataset.fx] = await ctx.decodeAudioData(arrayBuffer);
+                }
+                const source = ctx.createBufferSource();
+                source.buffer = fxBuffers[btn.dataset.fx];
+                source.connect(ctx.destination);
+                source.start(0);
             };
         });
 
         // Update All Effects
         function update() {
             if (!ctx) return;
-            const ids = ['pitch','tempo','reverb','echo','eq60','eq250','eq1k','eq4k','eq12k','lowpass','highpass'];
+            const ids = ['pitch','tempo','reverb','echo','flanger','distortion','eq60','eq250','eq1k','eq4k','eq12k','lowpass','highpass'];
             ids.forEach(id => {
                 const valEl = document.getElementById(id+'Val');
                 if(valEl) valEl.textContent = document.getElementById(id).value;
             });
 
             player.playbackRate = document.getElementById('tempo').value;
+            player.preservesPitch = false; // Biar pitch ikut tempo kayak DJ beneran
+            
             delay.delayTime.value = document.getElementById('echo').value * 0.5;
             eq60.gain.value = document.getElementById('eq60').value;
             eq250.gain.value = document.getElementById('eq250').value;
@@ -350,6 +372,19 @@
             eq12k.gain.value = document.getElementById('eq12k').value;
             lowpass.frequency.value = document.getElementById('lowpass').value;
             highpass.frequency.value = document.getElementById('highpass').value;
+            
+            // Distortion Curve
+            const dist = document.getElementById('distortion').value * 100;
+            distortionNode.curve = makeDistortionCurve(dist);
+        }
+
+        function makeDistortionCurve(amount) {
+            const k = amount, n = 44100, curve = new Float32Array(n);
+            for (let i = 0; i < n; i++) {
+                const x = i * 2 / n - 1;
+                curve[i] = (3 + k) * x * 20 * Math.PI / 180 / (Math.PI + k * Math.abs(x));
+            }
+            return curve;
         }
 
         document.querySelectorAll('input[type=range]').forEach(s => s.oninput = update);
@@ -374,7 +409,6 @@
                     ctx2d.fillRect(i * 3, canvas.height - h, 2, h);
                 }
 
-                // Beat Flash
                 if (isFlash && sum / buf.length > 100) {
                     document.body.style.background = '#ff0080';
                     setTimeout(() => document.body.style.background = '#0a0a0a', 50);
@@ -384,7 +418,8 @@
         }
 
         // Record
-        document.getElementById('recBtn').onclick = function() {
+        document.getElementById('recBtn').onclick = async function() {
+            await initAudioContext();
             if (!mediaRec || mediaRec.state === 'inactive') {
                 const dest = ctx.createMediaStreamDestination();
                 gain.connect(dest);
@@ -400,9 +435,11 @@
                 };
                 mediaRec.start();
                 this.textContent = '⏹️STOP';
+                this.classList.add('active');
             } else {
                 mediaRec.stop();
                 this.textContent = '🔴';
+                this.classList.remove('active');
             }
         };
     </script>
