@@ -18,8 +18,9 @@
         audio { width: 100%; height: 32px; }
      .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
      .controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
-        button { padding: 8px 4px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; font-weight: bold; font-size: 10px; cursor: pointer; transition: all 0.1s; }
+        button { padding: 8px 4px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; font-weight: bold; font-size: 10px; cursor: pointer; transition: all 0.1s; position: relative; }
         button:active { transform: scale(0.9); }
+        button::after { content: '🎁'; position: absolute; top: -2px; right: -2px; font-size: 8px; }
      .fx-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
      .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 9px; }
      .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
@@ -34,7 +35,7 @@
         @keyframes jedag { 0%, 100% { box-shadow: 0 0 15px #ff0000; } 50% { box-shadow: 0 0 30px #ff8800; } }
      .active { background: #00ff88!important; color: #000!important; }
         #infinixWarn { display:none; background:#ff8800; color:#000; padding:10px; text-align:center; font-weight:bold; margin-bottom:10px; border-radius:6px; }
-        #adTimer { position:fixed; bottom:10px; right:10px; background:#ff0080; color:#fff; padding:4px 8px; border-radius:12px; font-size:10px; z-index:999; }
+        #adStatus { position:fixed; bottom:10px; left:10px; background:#00ff88; color:#000; padding:4px 8px; border-radius:12px; font-size:10px; z-index:999; font-weight:bold; }
     </style>
 </head>
 <body>
@@ -46,7 +47,7 @@
         <h1>🎧 DJ PRO V3 ULTIMATE</h1>
         <div class="upload-section">
             <input type="file" id="audioFile" accept="audio/*" hidden>
-            <button class="file-btn" onclick="document.getElementById('audioFile').click()">📁 PILIH LAGU MP3</button>
+            <button class="file-btn" onclick="rewardedAction(() => document.getElementById('audioFile').click())">📁 PILIH LAGU MP3</button>
             <audio id="audioPlayer" controls></audio>
             <canvas id="visualizer" class="visualizer"></canvas>
         </div>
@@ -95,12 +96,12 @@
         </div>
     </div>
 
-    <!-- TIMER IKLAN 30 DETIK -->
-    <div id="adTimer">Iklan: 0:30</div>
+    <!-- STATUS IKLAN -->
+    <div id="adStatus">Siap</div>
 
-    <!-- HILLTOPADS VAST AUTO -->
+    <!-- HILLTOPADS VAST -->
     <div id="vast-player" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:999999;"></div>
-    <div id="vast-close" style="display:none; position:fixed; top:10px; right:10px; z-index:1000000; background:#ff0080; color:#fff; padding:8px 12px; border-radius:6px; font-weight:bold;">SKIP 5</div>
+    <div id="vast-loading" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1000000; color:#ff0080; font-weight:bold; font-size:16px; text-align:center;">Tonton Iklan Dulu Ya...<br><small style="color:#ccc; font-size:12px;">Gratis kok, buat support developer</small></div>
 
     <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
     <script>
@@ -117,15 +118,87 @@
         // HILLTOPADS VAST CONFIG
         const HILLTOP_VAST_URL = 'https://unequaledwinter.com/dom/F/z.dCG/NJveZGG/UF/JeZmr9Iu/ZXU/lGkgPCTlc/wJM/TlACziOLDsE-tRNgzpA/xKMiDLM/4vNWQe';
         let adsLoader, adsManager, adDisplayContainer, videoContent;
-        let adTimer = 30; // 30 DETIK 🔥
-        let adInterval;
-        let lastInteraction = Date.now();
-        let adShownCount = 0;
+        let lastAdTime = 0;
+        let pendingAction = null;
 
-        // Reset timer kalo user lagi aktif DJ-an
-        ['click', 'touchstart', 'input'].forEach(evt => {
-            document.addEventListener(evt, () => lastInteraction = Date.now());
-        });
+        // SEMUA TOMBOL LEWAT SINI DULU
+        function rewardedAction(callback) {
+            const now = Date.now();
+            // Kalo udah liat iklan 10 detik yang lalu, skip iklan
+            if (now - lastAdTime < 10000) {
+                document.getElementById('adStatus').textContent = 'Gratis!';
+                document.getElementById('adStatus').style.background = '#00ff88';
+                setTimeout(() => {
+                    document.getElementById('adStatus').textContent = 'Siap';
+                    document.getElementById('adStatus').style.background = '#00ff88';
+                }, 1000);
+                callback();
+                return;
+            }
+
+            pendingAction = callback;
+            document.getElementById('vast-player').style.display = 'block';
+            document.getElementById('vast-loading').style.display = 'block';
+            document.getElementById('adStatus').textContent = 'Loading...';
+            document.getElementById('adStatus').style.background = '#ff8800';
+
+            adDisplayContainer.initialize();
+            videoContent.load();
+
+            const adsRequest = new google.ima.AdsRequest();
+            adsRequest.adTagUrl = HILLTOP_VAST_URL;
+            adsRequest.linearAdSlotWidth = window.innerWidth;
+            adsRequest.linearAdSlotHeight = window.innerHeight;
+
+            adsLoader.requestAds(adsRequest);
+        }
+
+        function onAdComplete() {
+            document.getElementById('vast-player').style.display = 'none';
+            document.getElementById('vast-loading').style.display = 'none';
+            document.getElementById('adStatus').textContent = 'Makasih!';
+            document.getElementById('adStatus').style.background = '#00ff88';
+            lastAdTime = Date.now();
+            if (adsManager) adsManager.destroy();
+            if (pendingAction) {
+                pendingAction();
+                pendingAction = null;
+            }
+            setTimeout(() => {
+                document.getElementById('adStatus').textContent = 'Siap';
+            }, 2000);
+        }
+
+        function onAdError() {
+            console.log('Iklan gagal, lanjut aja');
+            onAdComplete();
+        }
+
+        function initVast() {
+            videoContent = document.createElement('video');
+            videoContent.style.width = '100%';
+            videoContent.style.height = '100%';
+            videoContent.setAttribute('playsinline', '');
+            videoContent.setAttribute('webkit-playsinline', '');
+            document.getElementById('vast-player').appendChild(videoContent);
+
+            adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById('vast-player'), videoContent);
+            adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+
+            adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, (e) => {
+                adsManager = e.getAdsManager(videoContent);
+                adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
+                adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onAdComplete);
+                adsManager.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, onAdComplete);
+                adsManager.addEventListener(google.ima.AdEvent.Type.SKIPPED, onAdComplete);
+                adsManager.addEventListener(google.ima.AdEvent.Type.LOADED, () => {
+                    document.getElementById('vast-loading').style.display = 'none';
+                });
+                adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.NORMAL);
+                adsManager.start();
+            });
+            adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
+        }
 
         async function initAudioContext() {
             if (!ctx) {
@@ -162,27 +235,34 @@
             }
         };
 
-        document.getElementById('playBtn').onclick = async () => { await initAudioContext(); player.play(); };
-        document.getElementById('pauseBtn').onclick = () => player.pause();
-        document.getElementById('stopBtn').onclick = () => { player.pause(); player.currentTime = 0; };
+        // SEMUA TOMBOL PAKE IKLAN
+        document.getElementById('playBtn').onclick = () => rewardedAction(async () => { await initAudioContext(); player.play(); });
+        document.getElementById('pauseBtn').onclick = () => rewardedAction(() => player.pause());
+        document.getElementById('stopBtn').onclick = () => rewardedAction(() => { player.pause(); player.currentTime = 0; });
 
-        document.getElementById('cueBtn').onclick = async function() {
+        document.getElementById('cueBtn').onclick = () => rewardedAction(async () => {
             await initAudioContext();
             if (player.paused && cuePoint > 0) {
                 player.currentTime = cuePoint; player.play();
-                this.classList.add('active'); setTimeout(() => this.classList.remove('active'), 200);
             } else {
                 cuePoint = player.currentTime;
-                this.classList.add('active'); setTimeout(() => this.classList.remove('active'), 200);
             }
-        };
+        });
 
-        document.getElementById('loopBtn').onclick = function() { player.loop =!player.loop; this.classList.toggle('active'); };
-        document.getElementById('flashBtn').onclick = function() { isFlash =!isFlash; this.classList.toggle('active'); };
+        document.getElementById('loopBtn').onclick = () => rewardedAction(() => {
+            player.loop =!player.loop;
+            document.getElementById('loopBtn').classList.toggle('active');
+        });
 
-        document.getElementById('jedagBtn').onclick = function() {
-            this.classList.toggle('jedag-mode');
-            if (this.classList.contains('jedag-mode')) {
+        document.getElementById('flashBtn').onclick = () => rewardedAction(() => {
+            isFlash =!isFlash;
+            document.getElementById('flashBtn').classList.toggle('active');
+        });
+
+        document.getElementById('jedagBtn').onclick = () => rewardedAction(() => {
+            const btn = document.getElementById('jedagBtn');
+            btn.classList.toggle('jedag-mode');
+            if (btn.classList.contains('jedag-mode')) {
                 document.getElementById('eq60').value = 18;
                 document.getElementById('eq250').value = 10;
                 document.getElementById('pitch').value = 0.85;
@@ -197,88 +277,9 @@
                 document.getElementById('distortion').value = 0;
                 update();
             }
-        };
+        });
 
-        // AUTO IKLAN 30 DETIK + SMART DETECTION
-        function startAdTimer() {
-            clearInterval(adInterval);
-            adInterval = setInterval(() => {
-                adTimer--;
-                document.getElementById('adTimer').textContent = `Iklan: 0:${adTimer < 10? '0' + adTimer : adTimer}`;
-
-                if (adTimer <= 0) {
-                    clearInterval(adInterval);
-                    // Cuma muncul kalo user aktif dalam 15 detik terakhir + belum liat 3x berturut2
-                    if (Date.now() - lastInteraction < 15000 && adShownCount < 3) {
-                        showAutoAd();
-                        adShownCount++;
-                    } else {
-                        adShownCount = 0; // Reset kalo user diem
-                    }
-                    adTimer = 30; // Reset 30 detik lagi
-                    startAdTimer();
-                }
-            }, 1000);
-        }
-
-        function showAutoAd() {
-            document.getElementById('vast-player').style.display = 'block';
-            document.getElementById('vast-close').style.display = 'block';
-
-            let skipCount = 5;
-            document.getElementById('vast-close').textContent = `SKIP ${skipCount}`;
-            const skipInterval = setInterval(() => {
-                skipCount--;
-                document.getElementById('vast-close').textContent = `SKIP ${skipCount}`;
-                if (skipCount <= 0) {
-                    clearInterval(skipInterval);
-                    document.getElementById('vast-close').textContent = 'SKIP';
-                    document.getElementById('vast-close').onclick = closeAd;
-                }
-            }, 1000);
-
-            adDisplayContainer.initialize();
-            videoContent.load();
-
-            const adsRequest = new google.ima.AdsRequest();
-            adsRequest.adTagUrl = HILLTOP_VAST_URL;
-            adsRequest.linearAdSlotWidth = window.innerWidth;
-            adsRequest.linearAdSlotHeight = window.innerHeight;
-
-            adsLoader.requestAds(adsRequest);
-        }
-
-        function closeAd() {
-            document.getElementById('vast-player').style.display = 'none';
-            document.getElementById('vast-close').style.display = 'none';
-            document.getElementById('vast-close').onclick = null;
-            if (adsManager) adsManager.destroy();
-        }
-
-        function initVast() {
-            videoContent = document.createElement('video');
-            videoContent.style.width = '100%';
-            videoContent.style.height = '100%';
-            videoContent.setAttribute('playsinline', '');
-            videoContent.setAttribute('webkit-playsinline', '');
-            document.getElementById('vast-player').appendChild(videoContent);
-
-            adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById('vast-player'), videoContent);
-            adsLoader = new google.ima.AdsLoader(adDisplayContainer);
-
-            adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, (adsManagerLoadedEvent) => {
-                adsManager = adsManagerLoadedEvent.getAdsManager(videoContent);
-                adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, closeAd);
-                adsManager.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, closeAd);
-                adsManager.addEventListener(google.ima.AdEvent.Type.SKIPPED, closeAd);
-                adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, closeAd);
-                adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.NORMAL);
-                adsManager.start();
-            });
-            adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, closeAd);
-        }
-
-        // FX BUTTONS
+        // FX JUGA PAKE IKLAN
         function playFX(type) {
             const osc = ctx.createOscillator();
             const fxGain = ctx.createGain();
@@ -327,11 +328,29 @@
         }
 
         document.querySelectorAll('.fx-btn').forEach(btn => {
-            btn.onclick = async () => {
+            btn.onclick = () => rewardedAction(async () => {
                 await initAudioContext();
                 playFX(btn.dataset.fx);
                 btn.classList.add('active'); setTimeout(() => btn.classList.remove('active'), 300);
-            };
+            });
+        });
+
+        document.getElementById('recBtn').onclick = () => rewardedAction(async () => {
+            await initAudioContext();
+            const btn = document.getElementById('recBtn');
+            if (!mediaRec || mediaRec.state === 'inactive') {
+                const dest = ctx.createMediaStreamDestination(); gain.connect(dest);
+                mediaRec = new MediaRecorder(dest.stream); chunks = [];
+                mediaRec.ondataavailable = e => chunks.push(e.data);
+                mediaRec.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                    a.download = 'DJ-PRO-MIX.webm'; a.click();
+                };
+                mediaRec.start(); btn.textContent = '⏹️STOP'; btn.classList.add('active');
+            } else {
+                mediaRec.stop(); btn.textContent = '🔴'; btn.classList.remove('active');
+            }
         });
 
         function update() {
@@ -374,28 +393,7 @@
             } draw();
         }
 
-        document.getElementById('recBtn').onclick = async function() {
-            await initAudioContext();
-            if (!mediaRec || mediaRec.state === 'inactive') {
-                const dest = ctx.createMediaStreamDestination(); gain.connect(dest);
-                mediaRec = new MediaRecorder(dest.stream); chunks = [];
-                mediaRec.ondataavailable = e => chunks.push(e.data);
-                mediaRec.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'audio/webm' });
-                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-                    a.download = 'DJ-PRO-MIX.webm'; a.click();
-                };
-                mediaRec.start(); this.textContent = '⏹️STOP'; this.classList.add('active');
-            } else {
-                mediaRec.stop(); this.textContent = '🔴'; this.classList.remove('active');
-            }
-        };
-
-        // INIT
-        window.addEventListener('load', () => {
-            initVast();
-            startAdTimer(); // MULAI TIMER 30 DETIK
-        });
+        window.addEventListener('load', initVast);
     </script>
 </body>
 </html>
