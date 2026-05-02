@@ -156,12 +156,11 @@
         const canvas = document.getElementById('visualizer');
         const ctx2d = canvas.getContext('2d');
 
-        // URL IKLAN FINAL - UDAH BENER TANPA TITIK KOMA ✅
+        // URL IKLAN PUNYA KAKAK - VERSI YANG DULU JALAN
         const HILLTOP_VAST_URL = 'https://unequaledwinter.com/dmm.FVzadtG-NlvUZRGDUi/xeGmU9cuvZ/UilNk/PyTccmwOMWTXARz/OKDTEht/N-znAlxoMtDwM/4GNrQb';
-        let adsLoader, adsManager, adDisplayContainer, videoContent, lastAdTime = 0, pendingAction = null, adsLoading = false;
+        let adsLoader, adsManager, adDisplayContainer, videoContent, lastAdTime = 0, pendingAction = null;
 
         function rewardedAction(callback) {
-            if (adsLoading) return;
             const now = Date.now();
             if (now - lastAdTime < 10000) {
                 document.getElementById('adStatus').textContent = 'Gratis!';
@@ -169,16 +168,17 @@
                 setTimeout(() => document.getElementById('adStatus').textContent = 'Siap', 1000);
                 return;
             }
+
             if (!adsLoader ||!window.google ||!google.ima) {
-                console.log('IMA SDK gak ready, skip');
                 callback();
                 return;
             }
-            adsLoading = true;
+
             pendingAction = callback;
             document.getElementById('vast-player').style.display = 'block';
             document.getElementById('vast-loading').style.display = 'block';
             document.getElementById('adStatus').textContent = 'Loading iklan...';
+
             try {
                 adDisplayContainer.initialize();
                 const adsRequest = new google.ima.AdsRequest();
@@ -186,38 +186,27 @@
                 adsRequest.linearAdSlotWidth = window.innerWidth;
                 adsRequest.linearAdSlotHeight = window.innerHeight;
                 adsLoader.requestAds(adsRequest);
-                setTimeout(() => { if (adsLoading) onAdError({getError: () => 'Timeout'}); }, 8000);
             } catch (e) {
-                onAdError({getError: () => e.message});
+                onAdComplete();
             }
         }
 
-        function onAdError(adErrorEvent) {
-            console.log('Iklan error:', adErrorEvent.getError());
+        function onAdError() {
             document.getElementById('vast-player').style.display = 'none';
             document.getElementById('vast-loading').style.display = 'none';
-            document.getElementById('vast-player').innerHTML = '';
             document.getElementById('adStatus').textContent = 'Skip iklan';
-            adsLoading = false;
-            if (adsManager) { adsManager.destroy(); adsManager = null; }
-            if (pendingAction) { const cb = pendingAction; pendingAction = null; cb(); }
-            setTimeout(() => initVast(), 500);
+            if (pendingAction) { pendingAction(); pendingAction = null; }
         }
 
         function onAdComplete() {
             document.getElementById('vast-player').style.display = 'none';
             document.getElementById('vast-loading').style.display = 'none';
-            document.getElementById('vast-player').innerHTML = '';
             document.getElementById('adStatus').textContent = 'Siap';
             lastAdTime = Date.now();
-            adsLoading = false;
-            if (adsManager) { adsManager.destroy(); adsManager = null; }
-            if (pendingAction) { const cb = pendingAction; pendingAction = null; cb(); }
-            setTimeout(() => initVast(), 500);
+            if (pendingAction) { pendingAction(); pendingAction = null; }
         }
 
         function initVast() {
-            document.getElementById('vast-player').innerHTML = '';
             videoContent = document.createElement('video');
             videoContent.style.width = '100%';
             videoContent.style.height = '100%';
@@ -225,8 +214,10 @@
             videoContent.setAttribute('muted', '');
             videoContent.muted = true;
             document.getElementById('vast-player').appendChild(videoContent);
+
             adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById('vast-player'), videoContent);
             adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+
             adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, (e) => {
                 adsManager = e.getAdsManager(videoContent);
                 adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
@@ -239,7 +230,9 @@
                 try {
                     adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.NORMAL);
                     adsManager.start();
-                } catch (adError) { onAdError({getError: () => adError.message}); }
+                } catch (adError) {
+                    onAdComplete();
+                }
             });
             adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
         }
