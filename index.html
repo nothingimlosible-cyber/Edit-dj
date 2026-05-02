@@ -11,29 +11,29 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; padding: 12px; padding-bottom: 80px!important; overflow-x: hidden; }
-       .container { max-width: 500px; margin: 0 auto; }
+      .container { max-width: 500px; margin: 0 auto; }
         h1 { text-align: center; color: #ff0080; text-shadow: 0 0 15px #ff0080; margin-bottom: 12px; font-size: 22px; }
-       .upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
-       .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
+      .upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
+      .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
         audio { width: 100%; height: 32px; }
-       .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
-       .controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
+      .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
+      .controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
         button { padding: 8px 4px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; font-weight: bold; font-size: 10px; cursor: pointer; transition: all 0.1s; position: relative; }
         button:active { transform: scale(0.9); }
         button::after { content: '🎁'; position: absolute; top: -2px; right: -2px; font-size: 8px; }
-       .fx-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
-       .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 9px; }
-       .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
-       .effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
-       .slider-group { margin-bottom: 10px; }
+      .fx-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
+      .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 9px; }
+      .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
+      .effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
+      .slider-group { margin-bottom: 10px; }
         label { display: block; margin-bottom: 3px; font-size: 11px; color: #ccc; }
         input[type="range"] { width: 100%; height: 4px; background: #2a2a2a; border-radius: 5px; outline: none; -webkit-appearance: none; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ff0080; border-radius: 50%; cursor: pointer; }
-       .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
-       .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
-       .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
+      .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
+      .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
+      .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
         @keyframes jedag { 0%, 100% { box-shadow: 0 0 15px #ff0000; } 50% { box-shadow: 0 0 30px #ff8800; } }
-       .active { background: #00ff88!important; color: #000!important; }
+      .active { background: #00ff88!important; color: #000!important; }
         #infinixWarn { display:none; background:#ff8800; color:#000; padding:10px; text-align:center; font-weight:bold; margin-bottom:10px; border-radius:6px; }
         #adStatus { position:fixed; bottom:10px; left:10px; background:#00ff88; color:#000; padding:4px 8px; border-radius:12px; font-size:10px; z-index:999; font-weight:bold; }
 
@@ -58,6 +58,31 @@
         body.recording #vast-loading {
             display: none!important;
         }
+
+        /* === FIX KHUS: BIAR IKLAN GAK NUTUPIN TOMBOL REKAM === */
+        #recBtn {
+            position: relative!important;
+            z-index: 9999999!important;
+        }
+
+        /* Sembunyiin iklan yang nyoba masuk ke area tombol rekam */
+        #recBtn ins.adsbygoogle,
+        #recBtn.adsbygoogle,
+       .controls ins.adsbygoogle {
+            display: none!important;
+        }
+
+        /* Paksa #adStatus gak boleh nutupin.controls */
+       .controls {
+            position: relative;
+            z-index: 10000!important;
+        }
+
+        /* Iklan VAST jangan nutupin tombol pas dipencet */
+        #vast-player {
+            z-index: 999998!important;
+        }
+        /* === END FIX === */
     </style>
 </head>
 <body>
