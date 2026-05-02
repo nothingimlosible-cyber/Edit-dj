@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DJ PRO V3 GOD MODE - FIXED</title>
+    <title>DJ PRO V3 GOD MODE - FINAL</title>
     <meta name="theme-color" content="#ff0080">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; padding: 12px; padding-bottom: 80px!important; overflow-x: hidden; }
-    .container { max-width: 500px; margin: 0 auto; }
+   .container { max-width: 500px; margin: 0 auto; }
         h1 { text-align: center; color: #ff0080; text-shadow: 0 0 15px #ff0080; margin-bottom: 12px; font-size: 22px; }
-    .upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
-    .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
+   .upload-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #ff0080; }
+   .file-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; margin-bottom: 8px; font-size: 14px; font-weight: bold; }
         audio { width: 100%; height: 32px; }
-    .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
-    .controls,.fx-pad,.hotcue-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
+   .visualizer { width: 100%; height: 70px; background: #000; border-radius: 6px; margin: 8px 0; border: 1px solid #ff0080; }
+   .controls,.fx-pad,.hotcue-pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; }
         button { padding: 8px 4px; background: linear-gradient(45deg, #ff0080, #7928ca); border: none; border-radius: 6px; color: #fff; font-weight: bold; font-size: 9px; cursor: pointer; transition: all 0.1s; position: relative; touch-action: manipulation; }
         button:active { transform: scale(0.9); }
         button::after { content: '🎁'; position: absolute; top: -2px; right: -2px; font-size: 8px; }
-     .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 8px; }
-     .hotcue-btn { background: linear-gradient(45deg, #00ff88, #00cc66)!important; height: 40px; font-size: 10px; color: #000!important; }
-     .hotcue-btn.set { background: linear-gradient(45deg, #ffff00, #ff8800)!important; }
-     .hotcue-btn::after { content: ''; }
-     .pro-btn { background: linear-gradient(45deg, #0088ff, #00ccff)!important; height: 45px; font-size: 8px; }
-     .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
-     .effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
-     .slider-group { margin-bottom: 10px; }
+        button:disabled { opacity: 0.5; }
+   .fx-btn { background: linear-gradient(45deg, #ff8800, #ff0080)!important; height: 45px; font-size: 8px; }
+   .hotcue-btn { background: linear-gradient(45deg, #00ff88, #00cc66)!important; height: 40px; font-size: 10px; color: #000!important; }
+   .hotcue-btn.set { background: linear-gradient(45deg, #ffff00, #ff8800)!important; }
+   .hotcue-btn::after { content: ''; }
+   .pro-btn { background: linear-gradient(45deg, #0088ff, #00ccff)!important; height: 45px; font-size: 8px; }
+   .effect-section { background: #1a1a1a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #333; }
+   .effect-title { color: #ff0080; margin-bottom: 6px; font-size: 13px; font-weight: bold; }
+   .slider-group { margin-bottom: 10px; }
         label { display: block; margin-bottom: 3px; font-size: 11px; color: #ccc; }
         input[type="range"] { width: 100%; height: 4px; background: #2a2a2a; border-radius: 5px; outline: none; -webkit-appearance: none; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ff0080; border-radius: 50%; cursor: pointer; }
-     .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
-     .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
-     .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
+   .eq-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; text-align: center; }
+   .eq-slider { height: 80px!important; writing-mode: vertical-lr; direction: rtl; }
+   .jedag-mode { background: linear-gradient(45deg, #ff0000, #ff8800)!important; animation: jedag 0.3s infinite; }
         @keyframes jedag { 0%, 100% { box-shadow: 0 0 15px #ff0000; } 50% { box-shadow: 0 0 30px #ff8800; } }
-     .active { background: #00ff88!important; color: #000!important; }
+   .active { background: #00ff88!important; color: #000!important; }
         #adStatus { position:fixed; bottom:10px; left:10px; background:#00ff88; color:#000; padding:4px 8px; border-radius:12px; font-size:10px; z-index:999; font-weight:bold; }
         #downloadRecBtn { width: 100%; padding: 12px; background: linear-gradient(45deg, #00ff88, #00cc66); color: #000; font-size: 14px; margin-top: 8px; display: none; }
         #downloadRecBtn::after { content: '⬇️'; }
@@ -147,18 +148,20 @@
     <div id="vast-loading" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1000000; color:#ff0080; font-weight:bold; font-size:16px; text-align:center;">Tonton Iklan Dulu Ya...</div>
 
     <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-    <script>let ctx, src, gain, analyser, delay, eq60, eq250, eq1k, eq4k, eq12k, lowpass, highpass;
+    <script>
+        let ctx, src, gain, analyser, delay, eq60, eq250, eq1k, eq4k, eq12k, lowpass, highpass;
         let mediaRec, chunks = [], cuePoint = 0, hotCues = {}, loopIn = 0, loopOut = 0, loopActive = false;
         let lastRecordedUrl = null, audioReady = false;
         const player = document.getElementById('audioPlayer');
         const canvas = document.getElementById('visualizer');
         const ctx2d = canvas.getContext('2d');
 
-        // URL IKLAN UDAH DIGANTI PAKE PUNYA KAKAK ✅
+        // URL IKLAN FINAL - UDAH BENER TANPA TITIK KOMA ✅
         const HILLTOP_VAST_URL = 'https://unequaledwinter.com/dmm.FVzadtG-NlvUZRGDUi/xeGmU9cuvZ/UilNk/PyTccmwOMWTXARz/OKDTEht/N-znAlxoMtDwM/4GNrQb';
-        let adsLoader, adsManager, adDisplayContainer, videoContent, lastAdTime = 0, pendingAction = null;
+        let adsLoader, adsManager, adDisplayContainer, videoContent, lastAdTime = 0, pendingAction = null, adsLoading = false;
 
         function rewardedAction(callback) {
+            if (adsLoading) return;
             const now = Date.now();
             if (now - lastAdTime < 10000) {
                 document.getElementById('adStatus').textContent = 'Gratis!';
@@ -167,13 +170,15 @@
                 return;
             }
             if (!adsLoader ||!window.google ||!google.ima) {
-                console.log('Iklan skip, IMA gak ready');
+                console.log('IMA SDK gak ready, skip');
                 callback();
                 return;
             }
+            adsLoading = true;
             pendingAction = callback;
             document.getElementById('vast-player').style.display = 'block';
             document.getElementById('vast-loading').style.display = 'block';
+            document.getElementById('adStatus').textContent = 'Loading iklan...';
             try {
                 adDisplayContainer.initialize();
                 const adsRequest = new google.ima.AdsRequest();
@@ -181,26 +186,44 @@
                 adsRequest.linearAdSlotWidth = window.innerWidth;
                 adsRequest.linearAdSlotHeight = window.innerHeight;
                 adsLoader.requestAds(adsRequest);
+                setTimeout(() => { if (adsLoading) onAdError({getError: () => 'Timeout'}); }, 8000);
             } catch (e) {
-                onAdComplete();
+                onAdError({getError: () => e.message});
             }
+        }
+
+        function onAdError(adErrorEvent) {
+            console.log('Iklan error:', adErrorEvent.getError());
+            document.getElementById('vast-player').style.display = 'none';
+            document.getElementById('vast-loading').style.display = 'none';
+            document.getElementById('vast-player').innerHTML = '';
+            document.getElementById('adStatus').textContent = 'Skip iklan';
+            adsLoading = false;
+            if (adsManager) { adsManager.destroy(); adsManager = null; }
+            if (pendingAction) { const cb = pendingAction; pendingAction = null; cb(); }
+            setTimeout(() => initVast(), 500);
         }
 
         function onAdComplete() {
             document.getElementById('vast-player').style.display = 'none';
             document.getElementById('vast-loading').style.display = 'none';
+            document.getElementById('vast-player').innerHTML = '';
+            document.getElementById('adStatus').textContent = 'Siap';
             lastAdTime = Date.now();
-            if (adsManager) adsManager.destroy();
-            if (pendingAction) { pendingAction(); pendingAction = null; }
+            adsLoading = false;
+            if (adsManager) { adsManager.destroy(); adsManager = null; }
+            if (pendingAction) { const cb = pendingAction; pendingAction = null; cb(); }
+            setTimeout(() => initVast(), 500);
         }
 
-        function onAdError() { onAdComplete(); }
-
         function initVast() {
+            document.getElementById('vast-player').innerHTML = '';
             videoContent = document.createElement('video');
             videoContent.style.width = '100%';
             videoContent.style.height = '100%';
             videoContent.setAttribute('playsinline', '');
+            videoContent.setAttribute('muted', '');
+            videoContent.muted = true;
             document.getElementById('vast-player').appendChild(videoContent);
             adDisplayContainer = new google.ima.AdDisplayContainer(document.getElementById('vast-player'), videoContent);
             adsLoader = new google.ima.AdsLoader(adDisplayContainer);
@@ -216,7 +239,7 @@
                 try {
                     adsManager.init(window.innerWidth, window.innerHeight, google.ima.ViewMode.NORMAL);
                     adsManager.start();
-                } catch (adError) { onAdComplete(); }
+                } catch (adError) { onAdError({getError: () => adError.message}); }
             });
             adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, onAdError);
         }
@@ -260,7 +283,6 @@
             }
         };
 
-        // TRANSPORT - PAKE IKLAN
         document.getElementById('playBtn').onclick = () => rewardedAction(async () => { await initAudioContext(); player.play(); });
         document.getElementById('pauseBtn').onclick = () => rewardedAction(() => player.pause());
         document.getElementById('stopBtn').onclick = () => rewardedAction(() => { player.pause(); player.currentTime = 0; });
@@ -296,7 +318,6 @@
             update();
         });
 
-        // REC - TANPA IKLAN ✅
         document.getElementById('recBtn').onclick = async () => {
             await initAudioContext();
             const btn = document.getElementById('recBtn');
@@ -318,7 +339,7 @@
                     downloadBtn.onclick = () => {
                         const a = document.createElement('a');
                         a.href = lastRecordedUrl;
-                        a.download = `DJ_PRO_V3_MIX_${Date.now()}.webm`;
+                        a.download = `DJ_PRO_MIX_${Date.now()}.webm`;
                         a.click();
                         recStatus.innerText = '✅ Berhasil di-download!';
                     };
@@ -336,7 +357,6 @@
             }
         };
 
-        // HOT CUE
         document.querySelectorAll('.hotcue-btn').forEach(btn => {
             btn.onclick = () => rewardedAction(async () => {
                 await initAudioContext();
@@ -352,7 +372,6 @@
             });
         });
 
-        // FX SAMPLER
         function playFX(type) {
             const osc = ctx.createOscillator();
             const fxGain = ctx.createGain();
@@ -385,7 +404,6 @@
             });
         });
 
-        // PRO TOOLS
         document.getElementById('pitchUpBtn').onclick = () => rewardedAction(() => {
             const pitch = document.getElementById('pitch');
             pitch.value = Math.min(2, parseFloat(pitch.value) + 0.05).toFixed(2);
@@ -472,38 +490,25 @@
             let freq = 20000;
             const sweep = setInterval(() => {
                 freq -= 500;
-                document.getElementById('lowpass').value = freq;
-                update();
+                lowpass.frequency.value = freq;
                 if(freq <= 500) {
                     clearInterval(sweep);
-                    document.getElementById('lowpass').value = 20000;
-                    update();
+                    lowpass.frequency.value = 20000;
                 }
             }, 30);
         });
         document.getElementById('reverbBtn').onclick = () => rewardedAction(() => {
-            document.getElementById('reverb').value = 1;
-            update();
-            setTimeout(() => {
-                document.getElementById('reverb').value = 0;
-                update();
-            }, 1000);
+            delay.delayTime.value = 0.3;
+            setTimeout(() => delay.delayTime.value = 0, 1000);
         });
         document.getElementById('echoBtn').onclick = () => rewardedAction(() => {
-            document.getElementById('echo').value = 0.5;
-            update();
-            setTimeout(() => {
-                document.getElementById('echo').value = 0;
-                update();
-            }, 2000);
+            delay.delayTime.value = 0.5;
+            setTimeout(() => delay.delayTime.value = 0, 2000);
         });
         document.getElementById('resetBtn').onclick = () => rewardedAction(() => {
             document.querySelectorAll('input[type=range]').forEach(s => {
                 if(s.id.includes('eq')) s.value = 0;
                 else if(s.id === 'pitch' || s.id === 'tempo') s.value = 1;
-                else if(s.id === 'lowpass') s.value = 20000;
-                else if(s.id === 'highpass') s.value = 20;
-                else s.value = 0;
             });
             update();
             loopActive = false;
@@ -512,7 +517,7 @@
 
         function update() {
             if (!audioReady) return;
-            ['pitch','tempo','eq60','eq250','eq1k','eq4k','eq12k','lowpass','highpass'].forEach(id => {
+            ['pitch','tempo'].forEach(id => {
                 const valEl = document.getElementById(id+'Val');
                 if(valEl) valEl.textContent = document.getElementById(id).value;
             });
@@ -522,8 +527,6 @@
             eq1k.gain.value = document.getElementById('eq1k').value;
             eq4k.gain.value = document.getElementById('eq4k').value;
             eq12k.gain.value = document.getElementById('eq12k').value;
-            lowpass.frequency.value = document.getElementById('lowpass').value;
-            highpass.frequency.value = document.getElementById('highpass').value;
         }
 
         document.querySelectorAll('input[type=range]').forEach(s => s.oninput = () => rewardedAction(update));
